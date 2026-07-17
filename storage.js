@@ -3,6 +3,7 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'applications.json');
+const TMP_DATA_FILE = path.join('/tmp', 'hrregister-applications.json');
 const BLOB_KEY = 'applications';
 
 function isNetlifyRuntime() {
@@ -11,7 +12,7 @@ function isNetlifyRuntime() {
 
 async function getBlobStore() {
   const { getStore } = require('@netlify/blobs');
-  return getStore({ name: 'hrregister-data', consistency: 'strong' });
+  return getStore({ name: 'hrregister-data' });
 }
 
 function ensureLocalDataFile() {
@@ -23,15 +24,33 @@ function ensureLocalDataFile() {
   }
 }
 
+function readTmpApplications() {
+  if (!fs.existsSync(TMP_DATA_FILE)) return [];
+  try {
+    return JSON.parse(fs.readFileSync(TMP_DATA_FILE, 'utf8'));
+  } catch {
+    return [];
+  }
+}
+
+function writeTmpApplications(list) {
+  fs.writeFileSync(TMP_DATA_FILE, JSON.stringify(list, null, 2), 'utf8');
+}
+
 async function readApplications() {
   if (isNetlifyRuntime()) {
-    const store = await getBlobStore();
-    const raw = await store.get(BLOB_KEY);
-    if (!raw) return [];
     try {
-      return JSON.parse(raw);
-    } catch {
-      return [];
+      const store = await getBlobStore();
+      const raw = await store.get(BLOB_KEY);
+      if (!raw) return [];
+      try {
+        return JSON.parse(raw);
+      } catch {
+        return [];
+      }
+    } catch (err) {
+      console.error('Netlify Blobs read failed:', err.message);
+      return readTmpApplications();
     }
   }
 
@@ -47,9 +66,15 @@ async function readApplications() {
 async function writeApplications(list) {
   const json = JSON.stringify(list, null, 2);
   if (isNetlifyRuntime()) {
-    const store = await getBlobStore();
-    await store.set(BLOB_KEY, json);
-    return;
+    try {
+      const store = await getBlobStore();
+      await store.set(BLOB_KEY, json);
+      return;
+    } catch (err) {
+      console.error('Netlify Blobs write failed:', err.message);
+      writeTmpApplications(list);
+      return;
+    }
   }
 
   ensureLocalDataFile();

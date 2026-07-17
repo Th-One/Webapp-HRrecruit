@@ -154,6 +154,11 @@ app.delete('/api/applications/:id', async (req, res) => {
   res.json({ ok: true });
 });
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: 'เกิดข้อผิดพลาดภายในระบบ' });
+});
+
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`HRregister running at http://localhost:${PORT}`);
