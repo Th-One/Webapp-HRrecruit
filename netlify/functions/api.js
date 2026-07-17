@@ -1,4 +1,10 @@
 const serverless = require('serverless-http');
+const { connectLambda } = require('@netlify/blobs');
 const { app } = require('../../server');
 
-exports.handler = serverless(app);
+const slsHandler = serverless(app);
+
+exports.handler = async (event, context) => {
+  connectLambda(event);
+  return slsHandler(event, context);
+};
