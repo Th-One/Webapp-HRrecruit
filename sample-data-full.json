@@ -1,0 +1,187 @@
+{
+  "page1": {
+    "heardFrom": "เว็บไซต์บริษัท / เพื่อนแนะนำ / ประกาศรับสมัครงาน",
+    "positionApplied": "เจ้าหน้าที่ทรัพยากรบุคคลอาวุโส",
+    "expectedSalary": "35,000 บาท",
+    "availableDate": "1 สิงหาคม 2569",
+    "knowsEmployee": "yes",
+    "knownEmployees": [
+      { "name": "นายกิตติ ตัวอย่าง", "dept": "ฝ่ายบุคคล", "relation": "เพื่อน" },
+      { "name": "นางสาวมาลี ทดสอบ", "dept": "ฝ่ายบัญชี", "relation": "ญาติ" },
+      { "name": "นายวิชัย ตรวจสอบ", "dept": "ฝ่ายขาย", "relation": "อดีตเพื่อนร่วมงาน" }
+    ],
+    "nameTh": "นายทดสอบ ระบบครบถ้วน",
+    "nameEn": "Mr. Complete System Test",
+    "ethnicity": "ไทย",
+    "nationality": "ไทย",
+    "religion": "พุทธ",
+    "birthDate": "15 มกราคม 2533",
+    "age": "36",
+    "weight": "72",
+    "height": "178",
+    "idCardNo": "1-2345-67890-12-3",
+    "idCardIssuedAt": "เขตบางรัก กรุงเทพมหานคร",
+    "idCardIssueDate": "15 ม.ค. 2565",
+    "idCardExpiry": "14 ม.ค. 2574",
+    "photoData": "__SAMPLE__",
+    "regAddress": {
+      "houseNo": "99/9",
+      "moo": "8",
+      "village": "หมู่บ้านตัวอย่าง",
+      "soi": "สุขุมวิท 50",
+      "road": "สุขุมวิท",
+      "tambon": "พระโขนง",
+      "amphoe": "คลองเตย",
+      "province": "กรุงเทพมหานคร",
+      "zip": "10260",
+      "phone": "02-999-9999"
+    },
+    "curAddress": {
+      "houseNo": "88/8",
+      "moo": "7",
+      "village": "อาคารทดสอบ",
+      "soi": "รัชดาภิเษก 10",
+      "road": "รัชดาภิเษก",
+      "tambon": "ห้วยขวาง",
+      "amphoe": "ห้วยขวาง",
+      "province": "กรุงเทพมหานคร",
+      "zip": "10310",
+      "phone": "089-999-9999"
+    },
+    "livingType": "other",
+    "livingOther": "บ้านพักสวัสดิการบริษัท",
+    "father": {
+      "name": "นายบิดา ระบบครบถ้วน",
+      "age": "68",
+      "nationality": "ไทย",
+      "ethnicity": "ไทย",
+      "alive": "alive",
+      "occupation": "ข้าราชการบำนาญ",
+      "workplace": "บ้านพัก จังหวัดเชียงใหม่"
+    },
+    "mother": {
+      "name": "นางมารดา ระบบครบถ้วน",
+      "age": "65",
+      "nationality": "ไทย",
+      "ethnicity": "ไทย",
+      "alive": "alive",
+      "occupation": "เจ้าของกิจการ",
+      "workplace": "ร้านตัวอย่าง จังหวัดเชียงใหม่"
+    },
+    "siblings": {
+      "total": "7",
+      "male": "4",
+      "female": "3",
+      "order": "4",
+      "list": [
+        { "name": "นายพี่หนึ่ง ระบบ", "age": "42", "occupation": "วิศวกร", "workplace": "บริษัท ก จำกัด", "position": "ผู้จัดการ" },
+        { "name": "นางสาวพี่สอง ระบบ", "age": "40", "occupation": "แพทย์", "workplace": "โรงพยาบาล ข", "position": "แพทย์เฉพาะทาง" },
+        { "name": "นายพี่สาม ระบบ", "age": "38", "occupation": "ครู", "workplace": "โรงเรียน ค", "position": "หัวหน้าหมวด" },
+        { "name": "นายทดสอบ ระบบ", "age": "36", "occupation": "พนักงาน", "workplace": "บริษัท นีโอคอสเมด", "position": "ผู้สมัคร" },
+        { "name": "นางสาวน้องห้า ระบบ", "age": "32", "occupation": "นักบัญชี", "workplace": "บริษัท ง จำกัด", "position": "หัวหน้าบัญชี" },
+        { "name": "นายน้องหก ระบบ", "age": "29", "occupation": "โปรแกรมเมอร์", "workplace": "บริษัท จ จำกัด", "position": "นักพัฒนาระบบ" }
+      ]
+    },
+    "emergencyContacts": [
+      { "name": "นางฉุกเฉิน คนที่หนึ่ง", "relation": "คู่สมรส", "address": "88/8 รัชดาภิเษก ห้วยขวาง กรุงเทพฯ 10310", "phone": "081-111-1111" },
+      { "name": "นายฉุกเฉิน คนที่สอง", "relation": "พี่ชาย", "address": "99/9 สุขุมวิท พระโขนง กรุงเทพฯ 10260", "phone": "082-222-2222" }
+    ],
+    "smoking": "yes",
+    "smokingPerDay": "2",
+    "chronicDisease": "yes",
+    "chronicDiseaseDetail": "ภูมิแพ้ ควบคุมอาการได้",
+    "seriousIllness": "yes",
+    "seriousIllnessTimes": "1",
+    "seriousIllnessReason": "ผ่าตัดไส้ติ่ง พักรักษาตัวครบแล้ว",
+    "legalCase": "yes",
+    "legalCaseTimes": "1",
+    "legalCaseDetail": "คดีตัวอย่างเพื่อทดสอบช่องข้อมูล สิ้นสุดคดีแล้ว",
+    "consentAccepted": true,
+    "signatureName": "นายทดสอบ ระบบครบถ้วน",
+    "signatureDate": "16 กรกฎาคม 2569"
+  },
+  "marital": {
+    "status": "married",
+    "marriedYear": "2560",
+    "registeredYear": "2561",
+    "notRegistered": true,
+    "spouse": {
+      "name": "นางคู่สมรส ระบบครบถ้วน",
+      "age": "35",
+      "nationality": "ไทย",
+      "ethnicity": "ไทย",
+      "alive": "alive",
+      "occupation": "เภสัชกร",
+      "workplace": "โรงพยาบาลตัวอย่าง",
+      "position": "หัวหน้าเภสัชกร"
+    },
+    "childrenCount": "6",
+    "children": [
+      { "gender": "ชาย", "birthYear": "2561" },
+      { "gender": "หญิง", "birthYear": "2562" },
+      { "gender": "ชาย", "birthYear": "2563" },
+      { "gender": "หญิง", "birthYear": "2564" },
+      { "gender": "ชาย", "birthYear": "2565" },
+      { "gender": "หญิง", "birthYear": "2566" }
+    ]
+  },
+  "languages": {
+    "english": { "speak": "ดีมาก", "write": "ดี", "read": "ดีมาก", "listen": "ดีมาก" },
+    "chinese": { "speak": "ดี", "write": "พอใช้", "read": "ดี", "listen": "ดี" },
+    "japanese": { "speak": "พอใช้", "write": "น้อย", "read": "พอใช้", "listen": "ดี" },
+    "other": { "name": "เกาหลี", "speak": "น้อย", "write": "น้อย", "read": "พอใช้", "listen": "พอใช้" }
+  },
+  "skills": {
+    "computer": "Microsoft Office, Google Workspace, ERP, HRIS, Power BI",
+    "other": "พิมพ์ดีดไทย-อังกฤษ ขับรถยนต์ และนำเสนอผลงาน"
+  },
+  "military": {
+    "status": "exempt",
+    "year": "2554",
+    "exemptReason": "สำเร็จการศึกษาวิชาทหารชั้นปีที่ 3"
+  },
+  "education": [
+    { "level": "primary", "school": "โรงเรียนประถมตัวอย่าง", "from": "2539", "to": "2544", "degree": "ป.6", "major": "ทั่วไป", "gpa": "3.80" },
+    { "level": "m1", "school": "โรงเรียนมัธยมตัวอย่าง", "from": "2545", "to": "2547", "degree": "ม.3", "major": "ทั่วไป", "gpa": "3.70" },
+    { "level": "m2", "school": "โรงเรียนมัธยมตัวอย่าง", "from": "2548", "to": "2550", "degree": "ม.6", "major": "ศิลป์-คำนวณ", "gpa": "3.60" },
+    { "level": "diploma", "school": "วิทยาลัยตัวอย่าง", "from": "2551", "to": "2552", "degree": "ปวส.", "major": "บริหารธุรกิจ", "gpa": "3.50" },
+    { "level": "bachelor", "school": "มหาวิทยาลัยตัวอย่าง", "from": "2553", "to": "2556", "degree": "บธ.บ.", "major": "ทรัพยากรมนุษย์", "gpa": "3.45" },
+    { "level": "master", "school": "มหาวิทยาลัยทดสอบ", "from": "2557", "to": "2559", "degree": "บธ.ม.", "major": "การจัดการ", "gpa": "3.75" },
+    { "level": "other", "otherLevel": "ประกาศนียบัตร", "school": "สถาบันพัฒนาบุคลากร", "from": "2560", "to": "2560", "degree": "ประกาศนียบัตร", "major": "แรงงานสัมพันธ์", "gpa": "ผ่าน" }
+  ],
+  "vehicles": {
+    "hasCar": "yes",
+    "carDetail": "Toyota Corolla Cross กข-9999 กรุงเทพฯ",
+    "hasCarLicense": "yes",
+    "carLicenseType": "yearly",
+    "carLicenseNo": "12345678",
+    "hasMotorcycle": "yes",
+    "motorcycleDetail": "Honda PCX 9กข-999 กรุงเทพฯ",
+    "hasMotorcycleLicense": "yes",
+    "motorcycleLicenseType": "lifetime",
+    "motorcycleLicenseNo": "MC-987654"
+  },
+  "references": [
+    { "name": "นายอ้างอิง หนึ่ง", "relation": "อดีตหัวหน้างาน", "occupation": "ผู้อำนวยการฝ่ายบุคคล", "address": "บริษัท ตัวอย่างหนึ่ง กรุงเทพฯ", "phone": "083-333-3333" },
+    { "name": "นางอ้างอิง สอง", "relation": "อาจารย์ที่ปรึกษา", "occupation": "อาจารย์มหาวิทยาลัย", "address": "มหาวิทยาลัยตัวอย่าง กรุงเทพฯ", "phone": "084-444-4444" }
+  ],
+  "workHistory": [
+    { "company": "บริษัท ปัจจุบัน จำกัด", "businessType": "เครื่องสำอาง", "startPosition": "เจ้าหน้าที่ HR", "endPosition": "หัวหน้า HR", "responsibilities": "สรรหา ค่าจ้าง ฝึกอบรม", "salaryStart": "25,000", "salaryEnd": "32,000", "fromDate": "01/2565", "toDate": "07/2569", "leaveReason": "ต้องการความก้าวหน้า" },
+    { "company": "บริษัท แห่งที่สอง", "businessType": "อาหาร", "startPosition": "เจ้าหน้าที่บุคคล", "endPosition": "เจ้าหน้าที่อาวุโส", "responsibilities": "เวลาและเงินเดือน", "salaryStart": "20,000", "salaryEnd": "24,000", "fromDate": "01/2562", "toDate": "12/2564", "leaveReason": "ย้ายที่พัก" },
+    { "company": "บริษัท แห่งที่สาม", "businessType": "ค้าปลีก", "startPosition": "ธุรการ", "endPosition": "เจ้าหน้าที่บุคคล", "responsibilities": "เอกสารและสวัสดิการ", "salaryStart": "17,000", "salaryEnd": "19,500", "fromDate": "01/2560", "toDate": "12/2561", "leaveReason": "เปลี่ยนสายงาน" },
+    { "company": "บริษัท แห่งที่สี่", "businessType": "ขนส่ง", "startPosition": "ธุรการ", "endPosition": "ธุรการ", "responsibilities": "ประสานงานทั่วไป", "salaryStart": "15,000", "salaryEnd": "16,500", "fromDate": "01/2559", "toDate": "12/2559", "leaveReason": "ครบสัญญา" },
+    { "company": "บริษัท แห่งที่ห้า", "businessType": "โรงแรม", "startPosition": "นักศึกษาฝึกงาน", "endPosition": "พนักงานชั่วคราว", "responsibilities": "บริการลูกค้า", "salaryStart": "9,000", "salaryEnd": "12,000", "fromDate": "06/2558", "toDate": "12/2558", "leaveReason": "ศึกษาต่อ" },
+    { "company": "ร้าน แห่งที่หก", "businessType": "บริการ", "startPosition": "ผู้ช่วย", "endPosition": "ผู้ช่วย", "responsibilities": "รับลูกค้าและเอกสาร", "salaryStart": "8,000", "salaryEnd": "8,500", "fromDate": "01/2557", "toDate": "05/2558", "leaveReason": "ฝึกงาน" },
+    { "company": "กิจการ แห่งที่เจ็ด", "businessType": "ครอบครัว", "startPosition": "ผู้ช่วยงาน", "endPosition": "ผู้ช่วยงาน", "responsibilities": "ขายและจัดสินค้า", "salaryStart": "6,000", "salaryEnd": "7,500", "fromDate": "01/2555", "toDate": "12/2556", "leaveReason": "เข้ามหาวิทยาลัย" }
+  ],
+  "hobbies": "อ่านหนังสือและศึกษาความรู้, วิ่งและว่ายน้ำ, ถ่ายภาพและทำอาหาร",
+  "clubs": [
+    { "name": "สมาคมนักบริหารงานบุคคล", "position": "สมาชิก" },
+    { "name": "ชมรมวิ่งเพื่อสุขภาพ", "position": "กรรมการ" },
+    { "name": "เครือข่ายอาสาสมัครชุมชน", "position": "ผู้ประสานงาน" }
+  ],
+  "trainings": [
+    { "course": "กฎหมายแรงงานและ PDPA สำหรับ HR", "institute": "สถาบันพัฒนาทรัพยากรมนุษย์", "from": "2567", "to": "2567" },
+    { "course": "การวิเคราะห์ข้อมูลด้วย Power BI", "institute": "ศูนย์ฝึกอบรมเทคโนโลยี", "from": "2568", "to": "2568" }
+  ]
+}

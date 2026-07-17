@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ใบสมัครงาน | HRregister</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="app-header no-print">
+    <div class="app-header-inner">
+      <div class="brand">
+        <div class="brand-title">HRregister</div>
+        <div class="brand-sub">ใบสมัครงาน F06-005 Rev.2</div>
+      </div>
+      <nav class="nav-links">
+        <a href="/" class="active">ใบสมัคร</a>
+        <a href="/hr/">หน้า HR</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero-strip">
+      <h1><span class="hero-emoji">📝</span>ใบสมัครงาน</h1>
+      <p>ยินดีต้อนรับสู่ระบบสมัครงาน บริษัท นีโอคอสเมด จำกัด — กรอกข้อมูลตามแบบฟอร์ม F06-005 Rev.2 เมื่อกรอกเสร็จระบบจะจัดข้อมูลลงใบสมัครและบันทึกเป็น PDF ส่ง HR ให้ทันที</p>
+    </div>
+
+    <div class="progress-card no-print">
+      <div class="progress-top">
+        <span class="label">ความคืบหน้าในการกรอก</span>
+        <span class="pct" id="progress-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-steps" id="progress-steps"></div>
+    </div>
+
+    <form id="application-form" autocomplete="on">
+      <!-- ========== หน้า 1 ========== -->
+      <section class="form-section" id="sec-apply">
+        <h2 class="section-title">ข้อมูลการสมัคร (หน้า 1)</h2>
+        <div class="grid grid-2">
+          <label class="field span-2">
+            <span>ท่านทราบข่าวการรับสมัครจาก</span>
+            <input type="text" name="heardFrom" />
+          </label>
+          <label class="field span-2">
+            <span>สมัครตำแหน่ง</span>
+            <input type="text" name="positionApplied" />
+          </label>
+          <label class="field">
+            <span>เงินเดือนที่ต้องการ</span>
+            <input type="text" name="expectedSalary" />
+          </label>
+          <label class="field">
+            <span>วันที่พร้อมปฏิบัติงาน</span>
+            <input type="text" name="availableDate" placeholder="วว/ดด/ปปปป" />
+          </label>
+        </div>
+
+        <div class="sub-block">
+          <div class="choice-row">
+            <span style="font-weight:600">ท่านมีญาติหรือรู้จักกับผู้ใดใน บริษัท นีโอคอสเมด จำกัด หรือไม่</span>
+            <label><input type="radio" name="knowsEmployee" value="no" /> ไม่มี</label>
+            <label><input type="radio" name="knowsEmployee" value="yes" /> มี ระบุ</label>
+          </div>
+          <div class="table-wrap" style="margin-top:0.75rem">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th>ลำดับ</th>
+                  <th>ชื่อ-นามสกุล</th>
+                  <th>แผนก/ฝ่าย</th>
+                  <th>ความสัมพันธ์</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><input name="knownEmp1_name" /></td>
+                  <td><input name="knownEmp1_dept" /></td>
+                  <td><input name="knownEmp1_relation" /></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><input name="knownEmp2_name" /></td>
+                  <td><input name="knownEmp2_dept" /></td>
+                  <td><input name="knownEmp2_relation" /></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><input name="knownEmp3_name" /></td>
+                  <td><input name="knownEmp3_dept" /></td>
+                  <td><input name="knownEmp3_relation" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-personal">
+        <h2 class="section-title">รายละเอียดส่วนตัวผู้สมัคร</h2>
+        <div class="grid grid-2">
+          <label class="field">
+            <span>ชื่อ-นามสกุล (ภาษาไทย)</span>
+            <input type="text" name="nameTh" />
+          </label>
+          <label class="field">
+            <span>ชื่อ-นามสกุล (ภาษาอังกฤษ)</span>
+            <input type="text" name="nameEn" />
+          </label>
+          <label class="field">
+            <span>เชื้อชาติ</span>
+            <input type="text" name="ethnicity" />
+          </label>
+          <label class="field">
+            <span>สัญชาติ</span>
+            <input type="text" name="nationality" />
+          </label>
+          <label class="field">
+            <span>ศาสนา</span>
+            <input type="text" name="religion" />
+          </label>
+          <label class="field">
+            <span>วัน เดือน ปี เกิด</span>
+            <input type="text" name="birthDate" placeholder="วว/ดด/ปปปป" />
+          </label>
+          <label class="field">
+            <span>อายุ (ปี)</span>
+            <input type="number" name="age" min="0" />
+          </label>
+          <label class="field">
+            <span>น้ำหนัก (กก.)</span>
+            <input type="text" name="weight" />
+          </label>
+          <label class="field">
+            <span>ส่วนสูง (ซม.)</span>
+            <input type="text" name="height" />
+          </label>
+          <label class="field">
+            <span>บัตรประชาชนเลขที่</span>
+            <input type="text" name="idCardNo" />
+          </label>
+          <label class="field">
+            <span>ออกให้ ณ เขต/จังหวัด</span>
+            <input type="text" name="idCardIssuedAt" />
+          </label>
+          <label class="field">
+            <span>วันที่ออกบัตร</span>
+            <input type="text" name="idCardIssueDate" />
+          </label>
+          <label class="field">
+            <span>วันหมดอายุ</span>
+            <input type="text" name="idCardExpiry" />
+          </label>
+        </div>
+
+        <div class="photo-upload" id="photoDrop">
+          <input type="file" name="photoFile" id="photoFile" accept="image/*" hidden />
+          <input type="hidden" name="photoData" id="photoData" />
+          <div class="photo-preview" id="photoWrap">
+            <img id="photoPreview" alt="รูปถ่าย" hidden />
+            <div class="photo-placeholder" id="photoPlaceholder">
+              <span class="photo-icon">📷</span>
+              <span class="photo-text">คลิกหรือลากรูปมาวางที่นี่</span>
+              <span class="photo-hint">รูปถ่ายของผู้สมัคร · ไม่เกิน 1.5 MB</span>
+            </div>
+          </div>
+          <button type="button" class="btn-secondary photo-remove" id="photoRemove" hidden>🗑️ ลบรูป</button>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-addr-reg">
+        <h2 class="section-title">ที่อยู่ตามทะเบียนบ้าน</h2>
+        <div class="grid grid-3">
+          <label class="field"><span>เลขที่</span><input name="regHouseNo" /></label>
+          <label class="field"><span>หมู่ที่</span><input name="regMoo" /></label>
+          <label class="field"><span>หมู่บ้าน</span><input name="regVillage" /></label>
+          <label class="field"><span>ตรอก/ซอย</span><input name="regSoi" /></label>
+          <label class="field"><span>ถนน</span><input name="regRoad" /></label>
+          <label class="field"><span>ตำบล/แขวง</span><input name="regTambon" /></label>
+          <label class="field"><span>อำเภอ/เขต</span><input name="regAmphoe" /></label>
+          <label class="field"><span>จังหวัด</span><input name="regProvince" /></label>
+          <label class="field"><span>รหัสไปรษณีย์</span><input name="regZip" /></label>
+          <label class="field span-2"><span>โทรศัพท์</span><input name="regPhone" type="tel" /></label>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-addr-cur">
+        <h2 class="section-title">ที่อยู่ปัจจุบัน (ซึ่งติดต่อได้)</h2>
+        <div class="grid grid-3">
+          <label class="field"><span>เลขที่</span><input name="curHouseNo" /></label>
+          <label class="field"><span>หมู่ที่</span><input name="curMoo" /></label>
+          <label class="field"><span>หมู่บ้าน</span><input name="curVillage" /></label>
+          <label class="field"><span>ตรอก/ซอย</span><input name="curSoi" /></label>
+          <label class="field"><span>ถนน</span><input name="curRoad" /></label>
+          <label class="field"><span>ตำบล/แขวง</span><input name="curTambon" /></label>
+          <label class="field"><span>อำเภอ/เขต</span><input name="curAmphoe" /></label>
+          <label class="field"><span>จังหวัด</span><input name="curProvince" /></label>
+          <label class="field"><span>รหัสไปรษณีย์</span><input name="curZip" /></label>
+          <label class="field span-2"><span>โทรศัพท์</span><input name="curPhone" type="tel" /></label>
+        </div>
+        <div class="sub-block">
+          <div class="choice-row">
+            <span style="font-weight:600">ปัจจุบันอาศัยอยู่</span>
+            <label><input type="radio" name="livingType" value="dorm" /> หอพัก</label>
+            <label><input type="radio" name="livingType" value="rent" /> บ้านเช่า</label>
+            <label><input type="radio" name="livingType" value="own" /> บ้านตัวเอง</label>
+            <label><input type="radio" name="livingType" value="parents" /> บ้านบิดา-มารดา</label>
+            <label><input type="radio" name="livingType" value="other" /> อื่นๆ ระบุ</label>
+          </div>
+          <label class="field" style="margin-top:0.6rem">
+            <span>อื่นๆ ระบุ</span>
+            <input type="text" name="livingOther" />
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-parents">
+        <h2 class="section-title">บิดา / มารดา / พี่น้อง</h2>
+        <div class="sub-block">
+          <h3>บิดา</h3>
+          <div class="grid grid-2">
+            <label class="field span-2"><span>ชื่อ-นามสกุลของบิดา</span><input name="fatherName" /></label>
+            <label class="field"><span>อายุ (ปี)</span><input type="number" name="fatherAge" min="0" /></label>
+            <label class="field"><span>สัญชาติ</span><input name="fatherNationality" /></label>
+            <label class="field"><span>เชื้อชาติ</span><input name="fatherEthnicity" /></label>
+            <div class="field span-2">
+              <span style="color:var(--muted);font-weight:600">สถานะ</span>
+              <div class="choice-row" style="margin-top:0.35rem">
+                <label><input type="radio" name="fatherAlive" value="alive" /> ยังมีชีวิตอยู่</label>
+                <label><input type="radio" name="fatherAlive" value="deceased" /> เสียชีวิตแล้ว</label>
+              </div>
+            </div>
+            <label class="field"><span>อาชีพ</span><input name="fatherOccupation" /></label>
+            <label class="field"><span>สถานที่ทำงาน</span><input name="fatherWorkplace" /></label>
+          </div>
+        </div>
+        <div class="sub-block">
+          <h3>มารดา</h3>
+          <div class="grid grid-2">
+            <label class="field span-2"><span>ชื่อ-นามสกุลของมารดา</span><input name="motherName" /></label>
+            <label class="field"><span>อายุ (ปี)</span><input type="number" name="motherAge" min="0" /></label>
+            <label class="field"><span>สัญชาติ</span><input name="motherNationality" /></label>
+            <label class="field"><span>เชื้อชาติ</span><input name="motherEthnicity" /></label>
+            <div class="field span-2">
+              <span style="color:var(--muted);font-weight:600">สถานะ</span>
+              <div class="choice-row" style="margin-top:0.35rem">
+                <label><input type="radio" name="motherAlive" value="alive" /> ยังมีชีวิตอยู่</label>
+                <label><input type="radio" name="motherAlive" value="deceased" /> เสียชีวิตแล้ว</label>
+              </div>
+            </div>
+            <label class="field"><span>อาชีพ</span><input name="motherOccupation" /></label>
+            <label class="field"><span>สถานที่ทำงาน</span><input name="motherWorkplace" /></label>
+          </div>
+        </div>
+        <div class="sub-block">
+          <h3>พี่น้อง</h3>
+          <div class="grid grid-4">
+            <label class="field"><span>จำนวนพี่น้อง (รวมผู้สมัคร) คน</span><input type="number" name="siblingTotal" min="0" /></label>
+            <label class="field"><span>ชาย (คน)</span><input type="number" name="siblingMale" min="0" /></label>
+            <label class="field"><span>หญิง (คน)</span><input type="number" name="siblingFemale" min="0" /></label>
+            <label class="field"><span>ผู้สมัครเป็นคนที่</span><input type="number" name="siblingOrder" min="0" /></label>
+          </div>
+          <div id="sibling-list" style="margin-top:0.75rem"></div>
+          <div class="btn-row no-print">
+            <button type="button" class="btn-secondary" id="add-sibling">+ เพิ่มพี่น้อง</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-emergency">
+        <h2 class="section-title">กรณีติดต่อไม่ได้ — บุคคลที่ติดต่อได้</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>ลำดับ</th>
+                <th>ชื่อ-นามสกุล</th>
+                <th>ความสัมพันธ์</th>
+                <th>ที่อยู่</th>
+                <th>โทรศัพท์</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><input name="emg1_name" /></td>
+                <td><input name="emg1_relation" /></td>
+                <td><input name="emg1_address" /></td>
+                <td><input name="emg1_phone" /></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><input name="emg2_name" /></td>
+                <td><input name="emg2_relation" /></td>
+                <td><input name="emg2_address" /></td>
+                <td><input name="emg2_phone" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-health">
+        <h2 class="section-title">สุขภาพและประวัติเพิ่มเติม</h2>
+        <div class="sub-block">
+          <div class="choice-row">
+            <span style="font-weight:600">ท่านสูบบุหรี่หรือไม่</span>
+            <label><input type="radio" name="smoking" value="no" /> ไม่สูบ</label>
+            <label><input type="radio" name="smoking" value="yes" /> สูบ</label>
+          </div>
+          <label class="field" style="margin-top:0.5rem;max-width:220px">
+            <span>วันละ (มวน)</span>
+            <input type="text" name="smokingPerDay" />
+          </label>
+        </div>
+        <div class="sub-block">
+          <div class="choice-row">
+            <span style="font-weight:600">ท่านมีโรคประจำตัวหรือโรคเรื้อรังหรือไม่</span>
+            <label><input type="radio" name="chronicDisease" value="no" /> ไม่มี</label>
+            <label><input type="radio" name="chronicDisease" value="yes" /> มี ระบุ</label>
+          </div>
+          <label class="field" style="margin-top:0.5rem">
+            <span>ระบุโรค</span>
+            <input type="text" name="chronicDiseaseDetail" />
+          </label>
+        </div>
+        <div class="sub-block">
+          <p class="hint">ในช่วงระยะเวลา 5 ปีที่ผ่านมา ท่านเคยได้รับบาดเจ็บหรือเป็นโรคติดต่อร้ายแรง จนไม่สามารถปฏิบัติงานเป็นเวลาติดต่อกันนานเกินกว่า 3 วัน หรือไม่</p>
+          <div class="choice-row">
+            <label><input type="radio" name="seriousIllness" value="never" /> ไม่เคย</label>
+            <label><input type="radio" name="seriousIllness" value="yes" /> เคย</label>
+          </div>
+          <div class="grid grid-2" style="margin-top:0.5rem">
+            <label class="field"><span>จำนวนครั้ง</span><input type="text" name="seriousIllnessTimes" /></label>
+            <label class="field"><span>ด้วยสาเหตุ</span><input type="text" name="seriousIllnessReason" /></label>
+          </div>
+        </div>
+        <div class="sub-block">
+          <div class="choice-row">
+            <span style="font-weight:600">ท่านเคยต้องโทษทางคดีอาญาหรือคดีทางแพ่งหรือไม่</span>
+            <label><input type="radio" name="legalCase" value="never" /> ไม่เคย</label>
+            <label><input type="radio" name="legalCase" value="yes" /> เคย</label>
+          </div>
+          <div class="grid grid-2" style="margin-top:0.5rem">
+            <label class="field"><span>จำนวนครั้ง</span><input type="text" name="legalCaseTimes" /></label>
+            <label class="field span-2"><span>เนื้อหาของคดี คือ</span><textarea name="legalCaseDetail" rows="2"></textarea></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-consent">
+        <h2 class="section-title">ความยินยอมให้ตรวจสอบข้อมูลส่วนบุคคล</h2>
+        <p class="hint">
+          ข้าพเจ้าขอรับรองว่าข้อมูลและเอกสารในการสมัครงานนี้เป็นความจริงทุกประการ กรณีที่บริษัทฯ ตรวจสอบพบภายหลังจากที่ว่าจ้าง
+          ข้าพเจ้าเข้ามาทำงานแล้ว ปรากฏว่าข้อมูลในใบสมัครงาน หรือเอกสารที่นำมาแสดง หรือรายละเอียดที่ให้ไว้ไม่เป็นความจริง ข้าพเจ้ายินยอม
+          ให้บริษัทฯ เลิกจ้างข้าพเจ้าได้โดยไม่ต้องบอกกล่าวล่วงหน้าหรือจ่ายเงินชดเชยหรือค่าเสียหายใดๆ ทั้งสิ้น (บริษัทฯ อาจจะทำการตรวจเช็คประวัติอาชญากรรมเป็นกรณี ๆ ไป)
+          ข้าพเจ้าได้รับความยินยอมจากเจ้าของข้อมูลที่ข้าพเจ้ากรอกข้อมูลไว้ในใบสมัครงาน เพื่อให้บริษัทฯ รวบรวม จัดเก็บ ใช้ เผยแพร่ตามนโยบายของบริษัทฯ รวมถึงยินยอมให้ตรวจสอบประวัติหรือข้อมูลจากใบสมัครงานหรือเอกสารที่ข้าพเจ้าให้ไว้กับบริษัทฯ
+        </p>
+        <div class="choice-row" style="margin-bottom:0.75rem">
+          <label><input type="checkbox" name="consentAccepted" value="yes" /> ข้าพเจ้ายินยอมและรับรองตามข้อความข้างต้น</label>
+        </div>
+        <div class="grid grid-2">
+          <label class="field">
+            <span>ลงชื่อผู้สมัครงาน / ผู้ให้ข้อมูล / ผู้ยินยอม</span>
+            <input type="text" name="signatureName" />
+          </label>
+          <label class="field">
+            <span>วันที่</span>
+            <input type="text" name="signatureDate" placeholder="วว/ดด/ปปปป" />
+          </label>
+        </div>
+      </section>
+
+      <!-- ========== หน้า 2 ========== -->
+      <section class="form-section" id="sec-marital">
+        <h2 class="section-title">สถานภาพการสมรสและครอบครัว (หน้า 2)</h2>
+        <p class="hint">เลือกสถานภาพ</p>
+        <div class="choice-row" id="marital-status">
+          <label><input type="radio" name="maritalStatus" value="single" /> โสด</label>
+          <label><input type="radio" name="maritalStatus" value="widowed" /> หม้าย</label>
+          <label><input type="radio" name="maritalStatus" value="divorced" /> หย่าร้าง</label>
+          <label><input type="radio" name="maritalStatus" value="married" /> มีสามี-ภรรยา</label>
+        </div>
+
+        <div class="sub-block" id="married-block" hidden>
+          <div class="grid grid-3">
+            <label class="field">
+              <span>สมรส เมื่อ พ.ศ.</span>
+              <input type="text" name="marriedYear" placeholder="เช่น 2565" />
+            </label>
+            <label class="field">
+              <span>จดทะเบียนสมรส เมื่อ พ.ศ.</span>
+              <input type="text" name="registeredYear" placeholder="เช่น 2565" />
+            </label>
+            <label class="field" style="justify-content:flex-end">
+              <span>&nbsp;</span>
+              <label><input type="checkbox" name="notRegistered" /> ไม่ได้จดทะเบียนสมรส</label>
+            </label>
+          </div>
+
+          <h3>ชื่อ-นามสกุลคู่สมรส / สามี-ภรรยา</h3>
+          <div class="grid grid-2">
+            <label class="field span-2">
+              <span>ชื่อ-นามสกุล</span>
+              <input type="text" name="spouseName" />
+            </label>
+            <label class="field">
+              <span>อายุ (ปี)</span>
+              <input type="number" name="spouseAge" min="0" />
+            </label>
+            <label class="field">
+              <span>สัญชาติ</span>
+              <input type="text" name="spouseNationality" />
+            </label>
+            <label class="field">
+              <span>เชื้อชาติ</span>
+              <input type="text" name="spouseEthnicity" />
+            </label>
+            <div class="field span-2">
+              <span style="color:var(--muted);font-weight:600">สถานะ</span>
+              <div class="choice-row" style="margin-top:0.35rem">
+                <label><input type="radio" name="spouseAlive" value="alive" /> ยังมีชีวิตอยู่</label>
+                <label><input type="radio" name="spouseAlive" value="deceased" /> เสียชีวิตแล้ว</label>
+              </div>
+            </div>
+            <label class="field">
+              <span>อาชีพ</span>
+              <input type="text" name="spouseOccupation" />
+            </label>
+            <label class="field">
+              <span>สถานที่ทำงาน</span>
+              <input type="text" name="spouseWorkplace" />
+            </label>
+            <label class="field span-2">
+              <span>ตำแหน่ง</span>
+              <input type="text" name="spousePosition" />
+            </label>
+          </div>
+        </div>
+
+        <div class="sub-block">
+          <div class="grid grid-3">
+            <label class="field">
+              <span>มีบุตร รวม (คน)</span>
+              <input type="number" name="childrenCount" id="childrenCount" min="0" max="6" value="0" />
+            </label>
+          </div>
+          <p class="hint">ระบุได้สูงสุด 6 คน ตามแบบฟอร์ม</p>
+          <div class="table-wrap">
+            <table class="data" id="children-table">
+              <thead>
+                <tr>
+                  <th>ลำดับ</th>
+                  <th>เพศ</th>
+                  <th>ปีเกิด (พ.ศ.)</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ความสามารถทางภาษา -->
+      <section class="form-section" id="sec-lang">
+        <h2 class="section-title">ความสามารถทางภาษา</h2>
+        <p class="hint">ระบุระดับ: ดีมาก, ดี, พอใช้, น้อย</p>
+        <div class="table-wrap">
+          <table class="data" id="lang-table">
+            <thead>
+              <tr>
+                <th>ภาษา</th>
+                <th>พูด</th>
+                <th>เขียน</th>
+                <th>อ่าน</th>
+                <th>ฟัง</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-lang="english">
+                <td>อังกฤษ</td>
+                <td><select name="lang_english_speak"></select></td>
+                <td><select name="lang_english_write"></select></td>
+                <td><select name="lang_english_read"></select></td>
+                <td><select name="lang_english_listen"></select></td>
+              </tr>
+              <tr data-lang="chinese">
+                <td>จีน</td>
+                <td><select name="lang_chinese_speak"></select></td>
+                <td><select name="lang_chinese_write"></select></td>
+                <td><select name="lang_chinese_read"></select></td>
+                <td><select name="lang_chinese_listen"></select></td>
+              </tr>
+              <tr data-lang="japanese">
+                <td>ญี่ปุ่น</td>
+                <td><select name="lang_japanese_speak"></select></td>
+                <td><select name="lang_japanese_write"></select></td>
+                <td><select name="lang_japanese_read"></select></td>
+                <td><select name="lang_japanese_listen"></select></td>
+              </tr>
+              <tr data-lang="other">
+                <td>
+                  อื่นๆ
+                  <input type="text" name="lang_other_name" placeholder="ระบุภาษา" style="margin-top:0.35rem" />
+                </td>
+                <td><select name="lang_other_speak"></select></td>
+                <td><select name="lang_other_write"></select></td>
+                <td><select name="lang_other_read"></select></td>
+                <td><select name="lang_other_listen"></select></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ความสามารถพิเศษ + ทหาร -->
+      <section class="form-section" id="sec-skills">
+        <h2 class="section-title">ความสามารถพิเศษ</h2>
+        <div class="grid grid-1">
+          <label class="field">
+            <span>โปรแกรมคอมพิวเตอร์ ระบุ</span>
+            <textarea name="computerSkills" rows="2"></textarea>
+          </label>
+          <label class="field">
+            <span>ความสามารถพิเศษอื่นๆ ระบุ</span>
+            <textarea name="otherSkills" rows="2"></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section" id="sec-military">
+        <h2 class="section-title">สถานภาพทางทหาร</h2>
+        <div class="choice-row">
+          <label><input type="radio" name="militaryStatus" value="served" /> เกณฑ์ทหารแล้ว</label>
+          <label><input type="radio" name="militaryStatus" value="upcoming" /> จะเกณฑ์ทหารในปี พ.ศ.</label>
+          <label><input type="radio" name="militaryStatus" value="exempt" /> ได้รับยกเว้น เพราะ</label>
+        </div>
+        <div class="grid grid-2" style="margin-top:0.75rem">
+          <label class="field">
+            <span>ปี พ.ศ. (กรณีจะเกณฑ์)</span>
+            <input type="text" name="militaryYear" />
+          </label>
+          <label class="field">
+            <span>เหตุผลยกเว้น</span>
+            <input type="text" name="militaryExemptReason" />
+          </label>
+        </div>
+      </section>
+
+      <!-- ประวัติการศึกษา -->
+      <section class="form-section" id="sec-edu">
+        <h2 class="section-title">ประวัติการศึกษา</h2>
+        <div class="table-wrap">
+          <table class="data" id="edu-table">
+            <thead>
+              <tr>
+                <th>ระดับการศึกษา</th>
+                <th>ชื่อสถานศึกษา</th>
+                <th>จาก พ.ศ.</th>
+                <th>ถึง พ.ศ.</th>
+                <th>วุฒิที่ได้รับ</th>
+                <th>สาขาวิชา</th>
+                <th>เกรดเฉลี่ย</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>ประถมศึกษา</td><td><input name="edu_primary_school" /></td><td><input name="edu_primary_from" /></td><td><input name="edu_primary_to" /></td><td><input name="edu_primary_degree" /></td><td><input name="edu_primary_major" /></td><td><input name="edu_primary_gpa" /></td></tr>
+              <tr><td>มัธยมต้น</td><td><input name="edu_m1_school" /></td><td><input name="edu_m1_from" /></td><td><input name="edu_m1_to" /></td><td><input name="edu_m1_degree" /></td><td><input name="edu_m1_major" /></td><td><input name="edu_m1_gpa" /></td></tr>
+              <tr><td>มัธยมปลาย/อาชีวฯ</td><td><input name="edu_m2_school" /></td><td><input name="edu_m2_from" /></td><td><input name="edu_m2_to" /></td><td><input name="edu_m2_degree" /></td><td><input name="edu_m2_major" /></td><td><input name="edu_m2_gpa" /></td></tr>
+              <tr><td>อนุปริญญา</td><td><input name="edu_diploma_school" /></td><td><input name="edu_diploma_from" /></td><td><input name="edu_diploma_to" /></td><td><input name="edu_diploma_degree" /></td><td><input name="edu_diploma_major" /></td><td><input name="edu_diploma_gpa" /></td></tr>
+              <tr><td>ปริญญาตรี</td><td><input name="edu_bachelor_school" /></td><td><input name="edu_bachelor_from" /></td><td><input name="edu_bachelor_to" /></td><td><input name="edu_bachelor_degree" /></td><td><input name="edu_bachelor_major" /></td><td><input name="edu_bachelor_gpa" /></td></tr>
+              <tr><td>ปริญญาโท</td><td><input name="edu_master_school" /></td><td><input name="edu_master_from" /></td><td><input name="edu_master_to" /></td><td><input name="edu_master_degree" /></td><td><input name="edu_master_major" /></td><td><input name="edu_master_gpa" /></td></tr>
+              <tr>
+                <td>อื่นๆ <input name="edu_other_level" placeholder="ระบุ" style="margin-top:0.3rem" /></td>
+                <td><input name="edu_other_school" /></td><td><input name="edu_other_from" /></td><td><input name="edu_other_to" /></td><td><input name="edu_other_degree" /></td><td><input name="edu_other_major" /></td><td><input name="edu_other_gpa" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ความสามารถในการขับขี่ -->
+      <section class="form-section" id="sec-vehicle">
+        <h2 class="section-title">ความสามารถในการขับขี่ยานพาหนะ</h2>
+        <div class="sub-block">
+          <div class="choice-row">
+            <span style="font-weight:600">คุณมีรถยนต์ส่วนตัวหรือไม่</span>
+            <label><input type="radio" name="hasCar" value="no" /> ไม่มี</label>
+            <label><input type="radio" name="hasCar" value="yes" /> มี</label>
+          </div>
+          <label class="field" style="margin-top:0.6rem">
+            <span>ระบุยี่ห้อ/รุ่น/ทะเบียน</span>
+            <input type="text" name="carDetail" />
+          </label>
+          <div class="choice-row" style="margin-top:0.75rem">
+            <span style="font-weight:600">ใบขับขี่รถยนต์</span>
+            <label><input type="radio" name="hasCarLicense" value="no" /> ไม่มี</label>
+            <label><input type="radio" name="hasCarLicense" value="yes" /> มี</label>
+          </div>
+          <div class="grid grid-2" style="margin-top:0.6rem">
+            <div class="field">
+              <span style="color:var(--muted);font-weight:600">ประเภทใบขับขี่</span>
+              <div class="choice-row" style="margin-top:0.35rem">
+                <label><input type="radio" name="carLicenseType" value="yearly" /> รายปี</label>
+                <label><input type="radio" name="carLicenseType" value="lifetime" /> ตลอดชีพ</label>
+              </div>
+            </div>
+            <label class="field">
+              <span>ใบขับขี่ เลขที่</span>
+              <input type="text" name="carLicenseNo" />
+            </label>
+          </div>
+        </div>
+
+        <div class="sub-block">
+          <div class="choice-row">
+            <span style="font-weight:600">คุณมีรถจักรยานยนต์ส่วนตัวหรือไม่</span>
+            <label><input type="radio" name="hasMotorcycle" value="no" /> ไม่มี</label>
+            <label><input type="radio" name="hasMotorcycle" value="yes" /> มี</label>
+          </div>
+          <label class="field" style="margin-top:0.6rem">
+            <span>ระบุยี่ห้อ/รุ่น/ทะเบียน</span>
+            <input type="text" name="motorcycleDetail" />
+          </label>
+          <div class="choice-row" style="margin-top:0.75rem">
+            <span style="font-weight:600">ใบขับขี่รถจักรยานยนต์</span>
+            <label><input type="radio" name="hasMotorcycleLicense" value="no" /> ไม่มี</label>
+            <label><input type="radio" name="hasMotorcycleLicense" value="yes" /> มี</label>
+          </div>
+          <div class="grid grid-2" style="margin-top:0.6rem">
+            <div class="field">
+              <span style="color:var(--muted);font-weight:600">ประเภทใบขับขี่</span>
+              <div class="choice-row" style="margin-top:0.35rem">
+                <label><input type="radio" name="motorcycleLicenseType" value="yearly" /> รายปี</label>
+                <label><input type="radio" name="motorcycleLicenseType" value="lifetime" /> ตลอดชีพ</label>
+              </div>
+            </div>
+            <label class="field">
+              <span>ใบขับขี่ เลขที่</span>
+              <input type="text" name="motorcycleLicenseNo" />
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- บุคคลอ้างอิง -->
+      <section class="form-section" id="sec-ref">
+        <h2 class="section-title">รายชื่อบุคคลอ้างอิง</h2>
+        <div class="table-wrap">
+          <table class="data" id="ref-table">
+            <thead>
+              <tr>
+                <th>ลำดับ</th>
+                <th>ชื่อ – นามสกุล</th>
+                <th>ความสัมพันธ์</th>
+                <th>อาชีพ/ตำแหน่ง</th>
+                <th>ที่อยู่ซึ่งติดต่อได้</th>
+                <th>โทรศัพท์</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><input name="ref1_name" /></td>
+                <td><input name="ref1_relation" /></td>
+                <td><input name="ref1_occupation" /></td>
+                <td><input name="ref1_address" /></td>
+                <td><input name="ref1_phone" /></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><input name="ref2_name" /></td>
+                <td><input name="ref2_relation" /></td>
+                <td><input name="ref2_occupation" /></td>
+                <td><input name="ref2_address" /></td>
+                <td><input name="ref2_phone" /></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><input name="ref3_name" /></td>
+                <td><input name="ref3_relation" /></td>
+                <td><input name="ref3_occupation" /></td>
+                <td><input name="ref3_address" /></td>
+                <td><input name="ref3_phone" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ประวัติการทำงาน -->
+      <section class="form-section" id="sec-work">
+        <h2 class="section-title">ประวัติการทำงาน</h2>
+        <p class="hint">เริ่มจากปัจจุบันไปสู่อดีต</p>
+        <div id="work-list"></div>
+        <div class="btn-row no-print">
+          <button type="button" class="btn-secondary" id="add-work">+ เพิ่มประวัติการทำงาน</button>
+        </div>
+      </section>
+
+      <!-- งานอดิเรก -->
+      <section class="form-section" id="sec-hobby">
+        <h2 class="section-title">งานอดิเรกและกิจกรรม</h2>
+        <label class="field">
+          <span>งานอดิเรก กิจกรรม และกีฬา</span>
+          <textarea name="hobbies" rows="2"></textarea>
+        </label>
+        <div class="sub-block">
+          <h3>สมาชิกสมาคม / ชมรม / สหภาพแรงงาน</h3>
+          <div id="club-list"></div>
+          <div class="btn-row no-print">
+            <button type="button" class="btn-secondary" id="add-club">+ เพิ่มสมาชิกภาพ</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- การฝึกอบรม -->
+      <section class="form-section" id="sec-train">
+        <h2 class="section-title">การฝึกอบรม ดูงาน ฝึกงาน</h2>
+        <div id="train-list"></div>
+        <div class="btn-row no-print">
+          <button type="button" class="btn-secondary" id="add-train">+ เพิ่มหลักสูตร</button>
+        </div>
+      </section>
+
+      <div class="sticky-actions no-print">
+        <button type="button" class="btn-secondary" id="btn-reset">ล้างฟอร์ม</button>
+        <button type="button" class="btn-secondary" id="btn-preview">👁️ ดูตัวอย่างใบสมัคร</button>
+        <button type="submit" class="btn-primary" id="btn-save">บันทึกใบสมัคร</button>
+      </div>
+    </form>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <template id="tpl-sibling">
+    <div class="sub-block sibling-item" style="background:#fff">
+      <div class="grid grid-3">
+        <label class="field">
+          <span>ชื่อ-นามสกุล</span>
+          <input data-field="name" />
+        </label>
+        <label class="field">
+          <span>อายุ (ปี)</span>
+          <input data-field="age" type="number" min="0" />
+        </label>
+        <label class="field">
+          <span>อาชีพ</span>
+          <input data-field="occupation" />
+        </label>
+        <label class="field">
+          <span>สถานที่ทำงาน/สถานศึกษา</span>
+          <input data-field="workplace" />
+        </label>
+        <label class="field">
+          <span>ตำแหน่งหน้าที่</span>
+          <input data-field="position" />
+        </label>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-danger remove-sibling">ลบ</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-work">
+    <div class="sub-block work-item">
+      <div class="grid grid-2">
+        <label class="field">
+          <span>ชื่อบริษัท</span>
+          <input data-field="company" />
+        </label>
+        <label class="field">
+          <span>ประเภทกิจการ</span>
+          <input data-field="businessType" />
+        </label>
+        <label class="field">
+          <span>ตำแหน่งเริ่มต้น</span>
+          <input data-field="startPosition" />
+        </label>
+        <label class="field">
+          <span>ตำแหน่งสุดท้าย</span>
+          <input data-field="endPosition" />
+        </label>
+        <label class="field span-2">
+          <span>หน้าที่รับผิดชอบ</span>
+          <textarea data-field="responsibilities" rows="2"></textarea>
+        </label>
+        <label class="field">
+          <span>อัตราค่าจ้าง / เงินเดือน (เริ่มต้น)</span>
+          <input data-field="salaryStart" />
+        </label>
+        <label class="field">
+          <span>อัตราค่าจ้าง / เงินเดือน (สิ้นสุด)</span>
+          <input data-field="salaryEnd" />
+        </label>
+        <label class="field">
+          <span>จาก วัน/เดือน/ปี</span>
+          <input data-field="fromDate" placeholder="วว/ดด/ปปปป" />
+        </label>
+        <label class="field">
+          <span>ถึง วัน/เดือน/ปี</span>
+          <input data-field="toDate" placeholder="วว/ดด/ปปปป" />
+        </label>
+        <label class="field span-2">
+          <span>สาเหตุที่ออก</span>
+          <input data-field="leaveReason" />
+        </label>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-danger remove-work">ลบรายการนี้</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-club">
+    <div class="grid grid-2 club-item" style="margin-bottom:0.65rem">
+      <label class="field">
+        <span>ชื่อสมาคม / ชมรม / สหภาพแรงงาน</span>
+        <input data-field="name" />
+      </label>
+      <label class="field">
+        <span>ตำแหน่ง</span>
+        <input data-field="position" />
+      </label>
+      <div class="span-2 btn-row">
+        <button type="button" class="btn-danger remove-club">ลบ</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-train">
+    <div class="sub-block train-item">
+      <div class="grid grid-2">
+        <label class="field">
+          <span>หลักสูตร</span>
+          <input data-field="course" />
+        </label>
+        <label class="field">
+          <span>สถาบัน</span>
+          <input data-field="institute" />
+        </label>
+        <label class="field">
+          <span>จาก</span>
+          <input data-field="from" />
+        </label>
+        <label class="field">
+          <span>ถึง</span>
+          <input data-field="to" />
+        </label>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn-danger remove-train">ลบรายการนี้</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="/js/form.js?v=2"></script>
+</body>
+</html>

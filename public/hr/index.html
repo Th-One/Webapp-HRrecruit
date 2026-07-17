@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>หน้า HR | HRregister</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <div class="brand">
+        <div class="brand-title">HRregister</div>
+        <div class="brand-sub">ประวัติผู้สมัคร</div>
+      </div>
+      <nav class="nav-links">
+        <a href="/">ใบสมัคร</a>
+        <a href="/hr/" class="active">หน้า HR</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero-strip">
+      <h1>ประวัติผู้สมัคร</h1>
+      <p>รายการใบสมัครที่บันทึกไว้ ดูรายละเอียด พิมพ์ PDF หรือลบประวัติได้</p>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat-card"><div class="num" id="stat-total">0</div><div class="lbl">ใบสมัครทั้งหมด</div></div>
+      <div class="stat-card"><div class="num" id="stat-month">0</div><div class="lbl">เดือนนี้</div></div>
+      <div class="stat-card"><div class="num" id="stat-today">0</div><div class="lbl">วันนี้</div></div>
+    </div>
+
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="ค้นหา: ชื่อ, ตำแหน่ง, บัตรประชาชน, บริษัท..." />
+      <a class="btn btn-primary" href="/">+ ใบสมัครใหม่</a>
+    </div>
+
+    <div class="list-card">
+      <table>
+        <thead>
+          <tr>
+            <th>วันที่บันทึก</th>
+            <th>ชื่อผู้สมัคร</th>
+            <th>ตำแหน่งที่สมัคร</th>
+            <th>บริษัทล่าสุด</th>
+            <th>การดำเนินการ</th>
+          </tr>
+        </thead>
+        <tbody id="list-body">
+          <tr><td colspan="5" class="empty">กำลังโหลด...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/js/hr.js?v=2"></script>
+</body>
+</html>

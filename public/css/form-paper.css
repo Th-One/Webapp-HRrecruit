@@ -1,0 +1,378 @@
+/* ===== Paper form layout (F06-005) for print / PDF ===== */
+:root {
+  --paper-ink: #14202e;
+  --paper-line: #9aa7b5;
+  --paper-soft: #eef2f6;
+  --paper-accent: #0f5c4c;
+}
+
+.paper {
+  background: #fff;
+  color: var(--paper-ink);
+  width: 210mm;
+  max-width: 100%;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 12mm 12mm 14mm;
+  font-family: "Sarabun", "Noto Sans Thai", sans-serif;
+  font-size: 12.5px;
+  line-height: 1.45;
+  box-shadow: 0 18px 50px rgba(20, 32, 46, 0.12);
+  border-radius: 4px;
+}
+
+.paper * {
+  box-sizing: border-box;
+}
+
+.paper-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  border-bottom: 2px solid var(--paper-accent);
+  padding-bottom: 0.55rem;
+  margin-bottom: 0.8rem;
+}
+
+.paper-head .titles {
+  flex: 1;
+}
+
+.paper-head h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--paper-accent);
+  letter-spacing: 0.01em;
+}
+
+.paper-head .company {
+  margin: 0.1rem 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--paper-ink);
+}
+
+.paper-head .doc-no {
+  margin: 0.15rem 0 0;
+  font-size: 10.5px;
+  color: #6b7886;
+}
+
+.paper-privacy {
+  font-size: 10.5px;
+  color: #6b7886;
+  margin: 0 0 0.7rem;
+  font-style: italic;
+}
+
+.paper-photo {
+  width: 30mm;
+  height: 40mm;
+  border: 1px dashed var(--paper-line);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--paper-soft);
+  flex-shrink: 0;
+}
+
+.paper-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.paper-photo .ph-label {
+  font-size: 10px;
+  color: #8a97a5;
+  text-align: center;
+  padding: 0 4px;
+}
+
+.paper-section {
+  margin-bottom: 0.85rem;
+  page-break-inside: avoid;
+}
+
+.paper-section-title {
+  background: var(--paper-accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 0.28rem 0.7rem;
+  border-radius: 4px 4px 0 0;
+  margin: 0;
+}
+
+.paper-section-body {
+  border: 1px solid #c9d4df;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  padding: 0.6rem 0.7rem;
+}
+
+.paper-grid {
+  display: grid;
+  gap: 0.4rem 0.6rem;
+}
+
+.pg-2 { grid-template-columns: 1fr 1fr; }
+.pg-3 { grid-template-columns: 1fr 1fr 1fr; }
+.pg-4 { grid-template-columns: repeat(4, 1fr); }
+.pg-auto { grid-template-columns: auto 1fr; }
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+.span-full { grid-column: 1 / -1; }
+
+.fill {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  font-size: 13px;
+  padding: 0.12rem 0;
+}
+
+.fill .lbl {
+  color: #41525f;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fill .val {
+  flex: 1;
+  border-bottom: 1px dotted #b8c4d0;
+  min-width: 60px;
+  padding: 0 0.15rem 0.05rem;
+}
+
+.fill .val.empty {
+  border-bottom: 1px dotted #cfd8e0;
+}
+
+.fill .val.filled {
+  border-bottom: 1px solid #6f7d8a;
+  font-weight: 600;
+  color: var(--paper-ink);
+}
+
+/* choice row: โสด ☑ หม้าย ☐ */
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  align-items: center;
+  font-size: 13px;
+}
+
+.choices .opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.choices .box {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--paper-line);
+  border-radius: 2px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.choices .box.circle {
+  border-radius: 50%;
+}
+
+.choices .opt.on .box::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--paper-accent);
+  border-radius: 1px;
+}
+
+.choices .opt.on .box.circle::after {
+  border-radius: 50%;
+}
+
+.choices .opt.on {
+  font-weight: 700;
+  color: var(--paper-accent);
+}
+
+.inline-choices {
+  display: inline-flex;
+  gap: 0.3rem 0.7rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.paper-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 0.3rem;
+}
+
+.paper-table th,
+.paper-table td {
+  border: 1px solid #c9d4df;
+  padding: 0.3rem 0.35rem;
+  vertical-align: top;
+  text-align: left;
+}
+
+.paper-table th {
+  background: var(--paper-soft);
+  font-weight: 700;
+  color: #36424d;
+  text-align: center;
+}
+
+.paper-table td.c {
+  text-align: center;
+}
+
+.paper-table td.empty {
+  color: #aab4bf;
+}
+
+.note {
+  font-size: 11px;
+  color: #6b7886;
+  margin: 0.2rem 0 0;
+}
+
+.consent-box {
+  border: 1px solid #c9d4df;
+  background: #fbfdfc;
+  border-radius: 4px;
+  padding: 0.6rem 0.75rem;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #2c3a45;
+}
+
+.sign-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.7rem;
+  align-items: end;
+}
+
+.sign-line {
+  border-bottom: 1px solid #6f7d8a;
+  height: 2.6rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.sign-cap {
+  text-align: center;
+  font-size: 12px;
+  color: #41525f;
+  margin-top: 0.2rem;
+}
+
+.page-break {
+  break-before: page;
+  page-break-before: always;
+  margin-top: 0;
+}
+
+.paper-foot {
+  margin-top: 1rem;
+  font-size: 10px;
+  color: #8a97a5;
+  text-align: center;
+  border-top: 1px solid #e3e9ee;
+  padding-top: 0.4rem;
+}
+
+.emg-box {
+  border: 1px solid #c9d4df;
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  margin-bottom: 0.8rem;
+  background: #fbfdfc;
+}
+
+.emg-title {
+  margin: 0 0 0.35rem;
+  font-size: 11px;
+  font-weight: 700;
+  color: #36424d;
+}
+
+.emg-row {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+
+.emg-row + .emg-row {
+  border-top: 1px dotted #d4dde5;
+  margin-top: 0.2rem;
+  padding-top: 0.35rem;
+}
+
+.emg-no {
+  font-weight: 700;
+  color: var(--paper-accent);
+}
+
+.emg-detail {
+  flex: 1;
+}
+
+.emg-detail .fill {
+  padding: 0.05rem 0;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .paper {
+    width: auto;
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+    padding: 10mm 12mm;
+    box-shadow: none;
+    border-radius: 0;
+    font-size: 12px;
+  }
+
+  .paper-section {
+    page-break-inside: avoid;
+  }
+
+  .page-break {
+    break-before: page;
+  }
+
+  @page {
+    size: A4;
+    margin: 8mm;
+  }
+}

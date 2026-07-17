@@ -1,0 +1,203 @@
+{
+  "page1": {
+    "heardFrom": "เพื่อนแนะนำ",
+    "positionApplied": "พนักงานขาย (Sales)",
+    "expectedSalary": "18,000 บาท",
+    "availableDate": "01/08/2569",
+    "knowsEmployee": "no",
+    "knownEmployees": [],
+    "nameTh": "สมชาย ใจดี",
+    "nameEn": "Somchai Jaidee",
+    "ethnicity": "ไทย",
+    "nationality": "ไทย",
+    "religion": "พุทธ",
+    "birthDate": "15 มีนาคม 2533",
+    "age": "35",
+    "weight": "70",
+    "height": "175",
+    "idCardNo": "1-1015-12345-67-8",
+    "idCardIssuedAt": "เขตคลองเตย กรุงเทพมหานคร",
+    "idCardIssueDate": "15 มี.ค. 2554",
+    "idCardExpiry": "15 มี.ค. 2574",
+    "photoData": "",
+    "regAddress": {
+      "houseNo": "123",
+      "moo": "5",
+      "village": "หมู่บ้านสวนสุข",
+      "soi": "ซอยสุขุมวิท 71",
+      "road": "สุขุมวิท",
+      "tambon": "คลองต้นไทร",
+      "amphoe": "คลองเตย",
+      "province": "กรุงเทพมหานคร",
+      "zip": "10110",
+      "phone": "02-123-4567"
+    },
+    "curAddress": {
+      "houseNo": "45/6",
+      "moo": "",
+      "village": "คอนโดพรีเมียร์",
+      "soi": "ซอยสุขุมวิท 23",
+      "road": "สุขุมวิท",
+      "tambon": "คลองเตเหนือ",
+      "amphoe": "วัฒนา",
+      "province": "กรุงเทพมหานคร",
+      "zip": "10110",
+      "phone": "081-234-5678"
+    },
+    "livingType": "rent",
+    "livingOther": "",
+    "father": {
+      "name": "สมบัติ ใจดี",
+      "age": "65",
+      "nationality": "ไทย",
+      "ethnicity": "ไทย",
+      "alive": "alive",
+      "occupation": "เกษตรกร",
+      "workplace": "บ้าน"
+    },
+    "mother": {
+      "name": "สมศรี ใจดี",
+      "age": "60",
+      "nationality": "ไทย",
+      "ethnicity": "ไทย",
+      "alive": "alive",
+      "occupation": "แม่บ้าน",
+      "workplace": "บ้าน"
+    },
+    "siblings": {
+      "total": "2",
+      "male": "1",
+      "female": "1",
+      "order": "1",
+      "list": [
+        {
+          "name": "สมหญิง รักไทย",
+          "age": "30",
+          "occupation": "พนักงานการตลาด",
+          "workplace": "บริษัท ABC จำกัด",
+          "position": "เจ้าหน้าที่การตลาด"
+        }
+      ]
+    },
+    "emergencyContacts": [
+      {
+        "name": "สมหญิง รักไทย",
+        "relation": "น้องสาว",
+        "address": "45/6 ซอยสุขุมวิท 23 คลองเตเหนือ วัฒนา กรุงเทพฯ 10110",
+        "phone": "089-876-5432"
+      },
+      {
+        "name": "สมบัติ ใจดี",
+        "relation": "บิดา",
+        "address": "123 หมู่บ้านสวนสุข คลองต้นไทร คลองเตย กรุงเทพฯ 10110",
+        "phone": "02-123-4567"
+      }
+    ],
+    "smoking": "no",
+    "smokingPerDay": "",
+    "chronicDisease": "no",
+    "chronicDiseaseDetail": "",
+    "seriousIllness": "never",
+    "seriousIllnessTimes": "",
+    "seriousIllnessReason": "",
+    "legalCase": "never",
+    "legalCaseTimes": "",
+    "legalCaseDetail": "",
+    "consentAccepted": true,
+    "signatureName": "สมชาย ใจดี",
+    "signatureDate": "15 ก.ค. 2569"
+  },
+  "marital": {
+    "status": "married",
+    "marriedYear": "2562",
+    "registeredYear": "2562",
+    "notRegistered": false,
+    "spouse": {
+      "name": "สมหญิง ใจดี",
+      "age": "33",
+      "nationality": "ไทย",
+      "ethnicity": "ไทย",
+      "alive": "alive",
+      "occupation": "พนักงานขาย",
+      "workplace": "บริษัท XYZ จำกัด",
+      "position": "หัวหน้าฝ่ายขาย"
+    },
+    "childrenCount": "1",
+    "children": [
+      { "gender": "ชาย", "birthYear": "2564" }
+    ]
+  },
+  "languages": {
+    "english": { "speak": "ดี", "write": "พอใช้", "read": "ดี", "listen": "ดี" },
+    "chinese": { "speak": "น้อย", "write": "น้อย", "read": "น้อย", "listen": "พอใช้" },
+    "japanese": { "speak": "", "write": "", "read": "", "listen": "" },
+    "other": { "speak": "", "write": "", "read": "", "listen": "", "name": "" }
+  },
+  "skills": {
+    "computer": "Microsoft Office (Word, Excel, PowerPoint), Google Workspace",
+    "other": "ขับรถยนต์, ทำบัญชีเบื้องต้น"
+  },
+  "military": {
+    "status": "served",
+    "year": "",
+    "exemptReason": ""
+  },
+  "education": [
+    { "level": "primary", "otherLevel": "", "school": "โรงเรียนวัดสวนสุข", "from": "2539", "to": "2544", "degree": "ประกาศนียบัตรประถมศึกษา", "major": "-", "gpa": "3.8" },
+    { "level": "m1", "otherLevel": "", "school": "โรงเรียนสุขุมวิท", "from": "2544", "to": "2547", "degree": "ประกาศนียบัตรมัธยมต้น", "major": "-", "gpa": "3.5" },
+    { "level": "m2", "otherLevel": "", "school": "โรงเรียนสุขุมวิท", "from": "2547", "to": "2550", "degree": "ม.6", "major": "ศิลป์-ภาษา", "gpa": "3.2" },
+    { "level": "bachelor", "otherLevel": "", "school": "มหาวิทยาลัยกรุงเทพ", "from": "2550", "to": "2553", "degree": "ปริญญาตรี", "major": "บริหารธุรกิจ (การตลาด)", "gpa": "3.2" }
+  ],
+  "vehicles": {
+    "hasCar": "yes",
+    "carDetail": "โตโยต้า โคโรลลา 1กข 1234 กรุงเทพฯ",
+    "hasCarLicense": "yes",
+    "carLicenseType": "lifetime",
+    "carLicenseNo": "5ก-12345",
+    "hasMotorcycle": "no",
+    "motorcycleDetail": "",
+    "hasMotorcycleLicense": "no",
+    "motorcycleLicenseType": "",
+    "motorcycleLicenseNo": ""
+  },
+  "references": [
+    { "name": "คุณวิชัย มั่นคง", "relation": "อดีตหัวหน้างาน", "occupation": "ผู้จัดการฝ่ายขาย", "address": "บริษัท ABC จำกัด สุขุมวิท กรุงเทพฯ", "phone": "081-111-2222" },
+    { "name": "คุณมาลี ศรีสุข", "relation": "เพื่อนร่วมงาน", "occupation": "พนักงานขาย", "address": "บริษัท ABC จำกัด สุขุมวิท กรุงเทพฯ", "phone": "089-333-4444" },
+    { "name": "คุณประยุทธ ใจงาม", "relation": "เพื่อนสนิท", "occupation": "ครู", "address": "โรงเรียนสุขใจ นนทบุรี", "phone": "086-555-6666" }
+  ],
+  "workHistory": [
+    {
+      "company": "บริษัท ABC จำกัด",
+      "businessType": "จำหน่ายสินค้าอุปโภคบริโภค",
+      "startPosition": "พนักงานขาย",
+      "endPosition": "หัวหน้าฝ่ายขาย",
+      "responsibilities": "ดูแลลูกค้า, ทำยอดขาย, ดูแลทีมขาย 5 คน",
+      "salaryStart": "12,000",
+      "salaryEnd": "16,000",
+      "fromDate": "01/06/2562",
+      "toDate": "30/06/2569",
+      "leaveReason": "หาทางเติบโตในอาชีพต่อ"
+    },
+    {
+      "company": "บริษัท XYZ จำกัด",
+      "businessType": "ค้าปลีก",
+      "startPosition": "พนักงานขาย",
+      "endPosition": "พนักงานขาย",
+      "responsibilities": "ขายสินค้าในร้าน, ดูแลสต็อก",
+      "salaryStart": "10,000",
+      "salaryEnd": "11,500",
+      "fromDate": "01/09/2553",
+      "toDate": "31/05/2562",
+      "leaveReason": "ย้ายมาบริษัท ABC"
+    }
+  ],
+  "hobbies": "อ่านหนังสือ, วิ่งออกกำลังกาย, ทำสวน",
+  "clubs": [
+    { "name": "ชมรมวิ่งเพื่อสุขภาพ กรุงเทพฯ", "position": "สมาชิก" },
+    { "name": "สมาคมนักขายไทย", "position": "สมาชิก" }
+  ],
+  "trainings": [
+    { "course": "หลักสูตรเทคนิคการขายขั้นสูง", "institute": "สถาบันพัฒนาธุรกิจ", "from": "2564", "to": "2564" },
+    { "course": "หลักสูตรการบริหารทีมขาย", "institute": "ศูนย์ฝึกอบรม ABC", "from": "2566", "to": "2566" }
+  ]
+}

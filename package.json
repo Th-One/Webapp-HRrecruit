@@ -1,0 +1,14 @@
+{
+  "name": "hrregister",
+  "version": "1.0.0",
+  "description": "ใบสมัครงาน F06-005 — ฟอร์มผู้สมัคร บันทึก และหน้า HR",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "uuid": "^11.0.5"
+  }
+}

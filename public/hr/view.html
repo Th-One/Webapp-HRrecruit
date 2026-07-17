@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ใบสมัครงาน | HRregister</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/form-paper.css" />
+</head>
+<body>
+  <header class="app-header no-print">
+    <div class="app-header-inner">
+      <div class="brand">
+        <div class="brand-title">HRregister</div>
+        <div class="brand-sub">ใบสมัครงาน F06-005</div>
+      </div>
+      <nav class="nav-links">
+        <a href="/">ใบสมัคร</a>
+        <a href="/hr/" class="active">หน้า HR</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero-strip no-print">
+      <h1>ใบสมัครงานพร้อมส่ง HR</h1>
+      <p>ข้อมูลของผู้สมัครถูกจัดลงในแบบฟอร์ม F06-005 แล้ว กดบันทึกเป็น PDF เพื่อส่งให้ HR</p>
+    </div>
+
+    <div class="detail-meta no-print" id="meta"></div>
+
+    <div class="action-bar no-print">
+      <button type="button" class="btn-primary" id="btn-download">📥 บันทึกเป็น PDF ส่ง HR</button>
+      <button type="button" class="btn-secondary" id="btn-print">🖨️ พิมพ์</button>
+      <button type="button" class="btn-secondary" id="btn-back">← กลับหน้ารายการ</button>
+      <button type="button" class="btn-danger" id="btn-delete">ลบใบสมัคร</button>
+    </div>
+
+    <div id="detail"></div>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/js/view.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+node_modules/
+data/applications.json
+generated/
+tmp-original/
+__pycache__/
+*.pyc
+.DS_Store
+*.log
