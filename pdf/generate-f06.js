@@ -209,10 +209,10 @@ async function fillPage1(pdfDoc, page, height, fontRegular, fontBold, data) {
   put([875, 455, 975, 470], get(registered, 'phone'), 8, 1);
 
   const current = obj(p.curAddress);
-  put([820, 475, 860, 491], get(current, 'houseNo'), 7.5, 1);
-  put([910, 475, 945, 491], get(current, 'moo'), 7.5, 1);
-  put([990, 475, 1070, 491], get(current, 'village'), 6.8, 1);
-  put([1110, 475, 1158, 491], get(current, 'soi'), 6.8, 1);
+  put([754, 475, 817, 491], get(current, 'houseNo'), 8, 1);
+  put([840, 475, 874, 491], get(current, 'moo'), 8, 1);
+  put([908, 475, 1014, 491], get(current, 'village'), 8, 0);
+  put([1060, 475, 1157, 491], get(current, 'soi'), 8, 0);
   put([685, 496, 800, 511], get(current, 'road'), 8, 1);
   put([850, 496, 970, 511], get(current, 'tambon'), 8, 1);
   put([1050, 496, 1158, 511], get(current, 'amphoe'), 8, 1);
