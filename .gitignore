@@ -6,3 +6,6 @@ __pycache__/
 *.pyc
 .DS_Store
 *.log
+.netlify/
+test-out.pdf
+render-*.png
