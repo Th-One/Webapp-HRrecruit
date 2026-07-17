@@ -132,10 +132,50 @@ function updateStats(list) {
   document.getElementById("stat-today").textContent = today;
 }
 
+function updatePositionDashboard(list) {
+  const section = document.getElementById("position-dashboard");
+  const summary = document.getElementById("position-dashboard-summary");
+  const container = document.getElementById("position-bars");
+  const counts = new Map();
+
+  for (const record of list) {
+    const position = record.data?.page1?.positionApplied?.trim() || "(ไม่ระบุตำแหน่ง)";
+    counts.set(position, (counts.get(position) || 0) + 1);
+  }
+
+  const rows = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "th"));
+  const max = rows[0]?.[1] || 0;
+
+  section.hidden = !list.length;
+  summary.textContent = rows.length
+    ? `${rows.length} ตำแหน่ง · รวม ${list.length} ใบสมัคร`
+    : "";
+
+  if (!rows.length) {
+    container.innerHTML = `<div class="position-empty">ยังไม่มีข้อมูลตำแหน่ง</div>`;
+    return;
+  }
+
+  container.innerHTML = rows
+    .map(([position, count]) => {
+      const pct = max ? Math.round((count / max) * 100) : 0;
+      return `
+        <div class="position-row">
+          <div class="position-label" title="${escapeHtml(position)}">${escapeHtml(position)}</div>
+          <div class="position-count">${count} ใบ</div>
+          <div class="position-track">
+            <div class="position-fill" style="width:${pct}%"></div>
+          </div>
+        </div>`;
+    })
+    .join("");
+}
+
 async function load() {
   const res = await fetch("/api/applications");
   allRecords = await res.json();
   updateStats(allRecords);
+  updatePositionDashboard(allRecords);
   renderList(document.getElementById("search").value);
 }
 

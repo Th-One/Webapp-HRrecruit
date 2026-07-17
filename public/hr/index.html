@@ -35,6 +35,14 @@
       <div class="stat-card"><div class="num" id="stat-today">0</div><div class="lbl">วันนี้</div></div>
     </div>
 
+    <section class="dashboard-card" id="position-dashboard" hidden>
+      <div class="dashboard-head">
+        <h2>Dashboard ตำแหน่งที่สมัคร</h2>
+        <span class="dashboard-sub" id="position-dashboard-summary"></span>
+      </div>
+      <div class="position-bars" id="position-bars"></div>
+    </section>
+
     <div class="toolbar">
       <input type="search" id="search" placeholder="ค้นหา: ชื่อ, ตำแหน่ง, บัตรประชาชน, บริษัท..." />
       <a class="btn btn-primary" href="/">+ ใบสมัครใหม่</a>
@@ -59,6 +67,6 @@
   </main>
 
   <div class="toast" id="toast" role="status"></div>
-  <script src="/js/hr.js?v=2"></script>
+  <script src="/js/hr.js?v=3"></script>
 </body>
 </html>
