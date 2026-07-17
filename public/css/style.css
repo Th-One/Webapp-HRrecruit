@@ -130,6 +130,10 @@ a:hover {
   font-family: var(--display);
   font-size: clamp(1.7rem, 3vw, 2.2rem);
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .hero-strip p {
@@ -139,9 +143,15 @@ a:hover {
   font-size: 1rem;
 }
 
-.hero-emoji {
-  font-size: 1.8rem;
-  margin-right: 0.4rem;
+.hero-logo {
+  height: 1em;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: contain;
+  border-radius: 0.15em;
+  background: #fff;
+  padding: 0.08em 0.2em;
 }
 
 .form-section {
