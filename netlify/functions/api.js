@@ -2,7 +2,9 @@ const serverless = require('serverless-http');
 const { connectLambda } = require('@netlify/blobs');
 const { app } = require('../../server');
 
-const slsHandler = serverless(app);
+const slsHandler = serverless(app, {
+  binary: ['application/pdf'],
+});
 
 exports.handler = async (event, context) => {
   if (event?.blobs) {
