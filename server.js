@@ -11,10 +11,12 @@ const {
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const GENERATED_DIR = path.join(__dirname, 'generated');
+const GENERATED_DIR = isNetlifyRuntime()
+  ? path.join('/tmp', 'hrregister-generated')
+  : path.join(__dirname, 'generated');
 const GENERATOR = path.join(__dirname, 'generate_f06.py');
 
-if (!fs.existsSync(GENERATED_DIR)) {
+if (!isNetlifyRuntime() && !fs.existsSync(GENERATED_DIR)) {
   fs.mkdirSync(GENERATED_DIR, { recursive: true });
 }
 
@@ -38,9 +40,16 @@ if (!isNetlifyRuntime()) {
   app.use(express.static(path.join(__dirname, 'public')));
 }
 
+function ensureGeneratedDir() {
+  if (!fs.existsSync(GENERATED_DIR)) {
+    fs.mkdirSync(GENERATED_DIR, { recursive: true });
+  }
+}
+
 app.post('/api/f06/preview', async (req, res) => {
   if (isNetlifyRuntime()) return pdfUnavailable(res);
 
+  ensureGeneratedDir();
   const token = uuidv4();
   const input = path.join(GENERATED_DIR, `${token}-preview.json`);
   const output = path.join(GENERATED_DIR, `${token}-preview.pdf`);
@@ -72,6 +81,7 @@ app.get('/api/applications', async (req, res) => {
 app.get('/api/applications/:id/f06.pdf', async (req, res) => {
   if (isNetlifyRuntime()) return pdfUnavailable(res);
 
+  ensureGeneratedDir();
   const list = await readApplications();
   const item = list.find((a) => a.id === req.params.id);
   if (!item) return res.status(404).json({ error: 'ไม่พบใบสมัคร' });
