@@ -448,8 +448,8 @@ async function generateF06Pdf(record) {
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
 
-  const fontRegular = await pdfDoc.embedFont(fs.readFileSync(assetPath('fonts', 'UPC-Regular.ttf')));
-  const fontBold = await pdfDoc.embedFont(fs.readFileSync(assetPath('fonts', 'UPC-Bold.ttf')));
+  const fontRegular = await pdfDoc.embedFont(fs.readFileSync(assetPath('fonts', 'Sarabun-Regular.ttf')));
+  const fontBold = await pdfDoc.embedFont(fs.readFileSync(assetPath('fonts', 'Sarabun-Bold.ttf')));
 
   const tpl1Bytes = fs.readFileSync(assetPath('templates', 'F06-005-page1.pdf'));
   const tpl2Bytes = fs.readFileSync(assetPath('templates', 'F06-005-page2.pdf'));
