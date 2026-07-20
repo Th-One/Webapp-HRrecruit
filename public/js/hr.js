@@ -36,34 +36,10 @@ function fmtDate(iso) {
   });
 }
 
-function summary(record) {
-  const d = record.data || {};
-  const p = d.page1 || {};
-  const name = p.nameTh || p.nameEn || "-";
-  const position = p.positionApplied || "-";
-  const company = d.workHistory?.[0]?.company || "-";
-  return { name, position, company };
-}
-
+// API ส่งข้อมูลย่อมาแล้ว (id, name, position, company, search)
+// ไม่ต้องขุดจาก data ทั้งใบ และ search ถูกคำนวณไว้ฝั่ง server
 function searchText(record) {
-  const d = record.data || {};
-  const p = d.page1 || {};
-  const parts = [
-    p.nameTh,
-    p.nameEn,
-    p.positionApplied,
-    p.idCardNo,
-    p.curAddress?.phone,
-    p.regAddress?.phone,
-    d.marital?.spouse?.name,
-    d.skills?.computer,
-    d.skills?.other,
-    d.hobbies,
-    ...(d.workHistory || []).flatMap((w) => [w.company, w.endPosition]),
-    ...(d.references || []).flatMap((r) => [r.name, r.phone]),
-    ...(d.education || []).map((e) => e.school),
-  ];
-  return parts.filter(Boolean).join(" ").toLowerCase();
+  return record.search || "";
 }
 
 let allRecords = [];
@@ -108,13 +84,12 @@ function renderList(filter = "") {
 
   tbody.innerHTML = rows
     .map((r) => {
-      const s = summary(r);
       return `
         <tr>
           <td>${fmtDate(r.createdAt)}</td>
-          <td><strong>${escapeHtml(s.name)}</strong></td>
-          <td>${escapeHtml(s.position)}</td>
-          <td>${escapeHtml(s.company)}</td>
+          <td><strong>${escapeHtml(r.name || "-")}</strong></td>
+          <td>${escapeHtml(r.position || "-")}</td>
+          <td>${escapeHtml(r.company || "-")}</td>
           <td>
             <a href="/hr/view.html?id=${r.id}">ดู</a> ·
             <a href="/api/applications/${encodeURIComponent(r.id)}/f06.pdf">PDF</a> ·
@@ -163,7 +138,7 @@ function updatePositionDashboard(list) {
   const counts = new Map();
 
   for (const record of scoped) {
-    const position = record.data?.page1?.positionApplied?.trim() || "(ไม่ระบุตำแหน่ง)";
+    const position = record.position?.trim() || "(ไม่ระบุตำแหน่ง)";
     counts.set(position, (counts.get(position) || 0) + 1);
   }
 

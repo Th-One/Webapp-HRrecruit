@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const {
-  readApplications,
-  writeApplications,
+  listSummaries,
+  getRecord,
+  putRecord,
+  deleteRecord,
   isNetlifyRuntime,
 } = require('./storage');
 const { generateF06Pdf } = require('./pdf/generate-f06');
@@ -49,16 +51,17 @@ app.post('/api/f06/preview', async (req, res) => {
   }
 });
 
+// ส่งเฉพาะฟิลด์ที่หน้ารายการใช้ ไม่ส่งข้อมูลทั้งใบ เพื่อไม่ให้ชนเพดาน
+// response 6 MB ของ Netlify Function เมื่อมีใบสมัครจำนวนมาก
 app.get('/api/applications', wrap(async (req, res) => {
-  const list = (await readApplications()).sort(
+  const list = (await listSummaries()).sort(
     (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
   );
   res.json(list);
 }));
 
 app.get('/api/applications/:id/f06.pdf', wrap(async (req, res) => {
-  const list = await readApplications();
-  const item = list.find((a) => a.id === req.params.id);
+  const item = await getRecord(req.params.id);
   if (!item) return res.status(404).json({ error: 'ไม่พบใบสมัคร' });
 
   try {
@@ -80,15 +83,13 @@ app.get('/api/applications/:id/f06.pdf', wrap(async (req, res) => {
 }));
 
 app.get('/api/applications/:id', wrap(async (req, res) => {
-  const list = await readApplications();
-  const item = list.find((a) => a.id === req.params.id);
+  const item = await getRecord(req.params.id);
   if (!item) return res.status(404).json({ error: 'ไม่พบใบสมัคร' });
   res.json(item);
 }));
 
 app.post('/api/applications', wrap(async (req, res) => {
   const now = new Date().toISOString();
-  const list = await readApplications();
   const record = {
     id: uuidv4(),
     createdAt: now,
@@ -96,31 +97,25 @@ app.post('/api/applications', wrap(async (req, res) => {
     status: 'submitted',
     data: stripPhoto(req.body || {}),
   };
-  list.push(record);
-  await writeApplications(list);
+  await putRecord(record);
   res.status(201).json(record);
 }));
 
 app.put('/api/applications/:id', wrap(async (req, res) => {
-  const list = await readApplications();
-  const idx = list.findIndex((a) => a.id === req.params.id);
-  if (idx === -1) return res.status(404).json({ error: 'ไม่พบใบสมัคร' });
-  list[idx] = {
-    ...list[idx],
+  const existing = await getRecord(req.params.id);
+  if (!existing) return res.status(404).json({ error: 'ไม่พบใบสมัคร' });
+  const updated = {
+    ...existing,
     updatedAt: new Date().toISOString(),
     data: stripPhoto(req.body || {}),
   };
-  await writeApplications(list);
-  res.json(list[idx]);
+  await putRecord(updated);
+  res.json(updated);
 }));
 
 app.delete('/api/applications/:id', wrap(async (req, res) => {
-  const list = await readApplications();
-  const next = list.filter((a) => a.id !== req.params.id);
-  if (next.length === list.length) {
-    return res.status(404).json({ error: 'ไม่พบใบสมัคร' });
-  }
-  await writeApplications(next);
+  const removed = await deleteRecord(req.params.id);
+  if (!removed) return res.status(404).json({ error: 'ไม่พบใบสมัคร' });
   res.json({ ok: true });
 }));
 
