@@ -5,7 +5,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["templates/**", "fonts/**"]
+  included_files = ["templates/**", "fonts/**", "pdf/**"]
 
 [[redirects]]
   from = "/api/*"

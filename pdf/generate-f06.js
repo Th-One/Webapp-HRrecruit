@@ -6,6 +6,8 @@ const { PDFDocument, rgb } = require('pdf-lib');
 const fontkit = require('@pdf-lib/fontkit');
 
 const INK = rgb(0.02, 0.1, 0.35);
+// ยกข้อความที่กรอกทั้งหมดให้ลอยเหนือเส้นเล็กน้อย (หน่วย pt, เพิ่มค่า = สูงขึ้น)
+const LIFT = 1.5;
 const WHITE = rgb(1, 1, 1);
 const SAMPLE_FILL = rgb(0.94, 0.95, 0.96);
 const SAMPLE_ACCENT = rgb(0.82, 0.85, 0.88);
@@ -46,8 +48,59 @@ function get(item, key) {
   return text(obj(item)[key]);
 }
 
-function createPainter(page, height, fontRegular, fontBold) {
-  function put(box, content, size = 10, align = 0, bold = false, erase = true) {
+function isThaiCombining(codePoint) {
+  return (
+    codePoint === 0x0E31 ||
+    codePoint === 0x0E33 ||
+    (codePoint >= 0x0E34 && codePoint <= 0x0E3A) ||
+    (codePoint >= 0x0E47 && codePoint <= 0x0E4E)
+  );
+}
+
+function measureThaiText(content, font, size) {
+  let width = 0;
+  for (const char of content) {
+    const codePoint = char.codePointAt(0);
+    if (!isThaiCombining(codePoint)) {
+      width += font.widthOfTextAtSize(char, size);
+    }
+  }
+  return width;
+}
+
+function drawThaiText(page, content, x, y, size, font, color) {
+  let cursor = x;
+  for (const char of content) {
+    const codePoint = char.codePointAt(0);
+    page.drawText(char, { x: cursor, y, size, font, color });
+    if (!isThaiCombining(codePoint)) {
+      cursor += font.widthOfTextAtSize(char, size);
+    }
+  }
+}
+
+// baseline จริงของเส้นจุดไข่ปลาทุกเส้น ดึงจาก template ด้วย PyMuPDF (ดู scripts/extract-line-baselines.py)
+const LINE_BASELINES = require('./line-baselines.json');
+// ระยะสูงสุดที่ยอมให้ snap เข้าเส้น — น้อยกว่าครึ่งหนึ่งของระยะห่างระหว่างบรรทัด
+const SNAP_TOLERANCE = 7;
+
+// หา baseline ของเส้นจุดที่ตรงกับช่อง (x ต้องคาบเกี่ยว, y ต้องใกล้กว่า tolerance)
+function snapToLine(lines, x0, x1, guess) {
+  let best = null;
+  let bestDist = SNAP_TOLERANCE;
+  for (const line of lines) {
+    if (x1 < line.x0 - 5 || x0 > line.x1 + 5) continue;
+    const dist = Math.abs(line.y - guess);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = line.y;
+    }
+  }
+  return best;
+}
+
+function createPainter(page, height, fontRegular, fontBold, lines = []) {
+  function put(box, content, size = 10, align = 0, bold = false, erase = true, dy = 0) {
     content = text(content);
     if (!content) return;
     const [x0, y0, x1, y1] = box;
@@ -55,10 +108,10 @@ function createPainter(page, height, fontRegular, fontBold) {
     const rectHeight = y1 - y0;
     const font = bold ? fontBold : fontRegular;
     let current = size + 1;
-    while (current > 4 && font.widthOfTextAtSize(content, current) > width - 2) {
+    while (current > 4 && measureThaiText(content, font, current) > width - 2) {
       current -= 0.5;
     }
-    const textWidth = font.widthOfTextAtSize(content, current);
+    const textWidth = measureThaiText(content, font, current);
     let x;
     if (align === 1) {
       x = x0 + Math.max(1, (width - textWidth) / 2);
@@ -68,18 +121,43 @@ function createPainter(page, height, fontRegular, fontBold) {
       x = x0 + 1;
     }
     let baseline;
+    let lift;
     if (erase) {
-      baseline = y1 - Math.max(9, current * 1.15);
+      // ช่องจุดไข่ปลา: เกาะ baseline จริงของเส้นใน template (ถ้าหาไม่เจอค่อยใช้สูตรเดิม)
+      const guess = y1 - 6.4;
+      const snapped = snapToLine(lines, x0, x1, guess);
+      baseline = (snapped === null ? guess : snapped) + dy;
+      lift = LIFT;
     } else {
-      baseline = y0 + rectHeight / 2 + current * 0.34;
+      // ช่องในตาราง: จัดกึ่งกลางแนวตั้งในเซลล์ — ไม่ยก LIFT เพราะไม่ได้อยู่บนเส้น
+      baseline = y0 + rectHeight / 2 + current * 0.34 + dy;
+      lift = 0;
     }
-    page.drawText(content, {
-      x,
-      y: height - baseline,
-      size: current,
-      font,
-      color: INK,
-    });
+    drawThaiText(page, content, x, height - baseline + lift, current, font, INK);
+  }
+
+  // วางข้อความโดยกำหนด baseline (พิกัด top-down) ตรงจาก template โดยตรง
+  // ใช้กับช่องจุดไข่ปลาที่วัด origin จุดจริงมาแล้ว ไม่พึ่งสูตร y1-6.4 ที่เปราะ
+  function putOnLine(box, content, size, align, baselineY) {
+    content = text(content);
+    if (!content) return;
+    const [x0, , x1] = box;
+    const width = x1 - x0;
+    const font = fontRegular;
+    let current = size + 1;
+    while (current > 4 && measureThaiText(content, font, current) > width - 2) {
+      current -= 0.5;
+    }
+    const textWidth = measureThaiText(content, font, current);
+    let x;
+    if (align === 1) {
+      x = x0 + Math.max(1, (width - textWidth) / 2);
+    } else if (align === 2) {
+      x = x1 - textWidth - 1;
+    } else {
+      x = x0 + 1;
+    }
+    drawThaiText(page, content, x, height - baselineY + LIFT, current, font, INK);
   }
 
   function mark(x, y, selected) {
@@ -108,7 +186,7 @@ function createPainter(page, height, fontRegular, fontBold) {
     }
   }
 
-  return { put, mark, markValue };
+  return { put, putOnLine, mark, markValue };
 }
 
 async function placePhoto(pdfDoc, page, height, dataUrl) {
@@ -141,7 +219,7 @@ async function placePhoto(pdfDoc, page, height, dataUrl) {
 }
 
 async function fillPage1(pdfDoc, page, height, fontRegular, fontBold, data) {
-  const { put, mark, markValue } = createPainter(page, height, fontRegular, fontBold);
+  const { put, putOnLine, mark, markValue } = createPainter(page, height, fontRegular, fontBold, LINE_BASELINES.page1);
   const p = obj(data.page1);
 
   const contacts = arr(p.emergencyContacts);
@@ -166,22 +244,22 @@ async function fillPage1(pdfDoc, page, height, fontRegular, fontBold, data) {
   });
 
   markValue(get(p, 'smoking'), [['no', 94.1, 269.8], ['yes', 134.7, 269.8]]);
-  put([178, 270, 213, 286], get(p, 'smokingPerDay'), 9, 1);
+  put([186, 278, 223, 291], get(p, 'smokingPerDay'), 8, 1);
   markValue(get(p, 'chronicDisease'), [['no', 170.2, 290.1], ['yes', 205.2, 290.1]]);
   put([260, 290, 560, 307], get(p, 'chronicDiseaseDetail'), 8);
   markValue(get(p, 'seriousIllness'), [['never', 19.6, 329.8], ['yes', 62.4, 329.8]]);
-  put([105, 330, 145, 347], get(p, 'seriousIllnessTimes'), 9, 1);
+  put([94, 338, 138, 351], get(p, 'seriousIllnessTimes'), 8, 1);
   put([220, 330, 560, 347], get(p, 'seriousIllnessReason'), 8);
   markValue(get(p, 'legalCase'), [['never', 214.2, 349.6], ['yes', 257.2, 349.6]]);
   put([302, 350, 342, 367], get(p, 'legalCaseTimes'), 9, 1);
   put([120, 373, 565, 388], get(p, 'legalCaseDetail'), 8);
-  put([82, 558, 265, 575], get(p, 'signatureName'), 10, 1);
-  put([472, 558, 555, 575], get(p, 'signatureDate'), 9, 1);
+  put([74, 582, 264, 597], get(p, 'signatureName'), 10, 1);
+  put([430, 559, 547, 574], get(p, 'signatureDate'), 8, 1);
 
-  put([760, 175, 1145, 192], get(p, 'positionApplied'), 11, 0, true);
+  put([760, 175, 1145, 192], get(p, 'positionApplied'), 11, 0, false);
   put([760, 204, 910, 220], get(p, 'expectedSalary'), 10, 1);
   put([1012, 204, 1138, 220], get(p, 'availableDate'), 9, 1);
-  put([770, 265, 1055, 280], get(p, 'nameTh'), 11, 0, true);
+  put([770, 265, 1055, 280], get(p, 'nameTh'), 11, 0, false);
   put([780, 291, 1065, 307], get(p, 'nameEn'), 10);
   put([666, 312, 765, 327], get(p, 'ethnicity'), 9, 1);
   put([798, 312, 886, 327], get(p, 'nationality'), 9, 1);
@@ -196,29 +274,31 @@ async function fillPage1(pdfDoc, page, height, fontRegular, fontBold, data) {
   put([898, 372, 1054, 388], get(p, 'idCardExpiry'), 9, 1);
   await placePhoto(pdfDoc, page, height, get(p, 'photoData'));
 
+  // ที่อยู่: ตรึง baseline ไว้ที่ origin ของเส้นจุดจริงที่วัดจาก template ด้วย PyMuPDF
+  // (FreesiaUPC 12.96pt) แทนสูตร y1-6.4 เพื่อให้ข้อความอยู่บนเส้นแบบแม่นยำทุกแถว
   const registered = obj(p.regAddress);
-  put([760, 392, 820, 407], get(registered, 'houseNo'), 8, 1);
-  put([878, 392, 916, 407], get(registered, 'moo'), 8, 1);
-  put([970, 392, 1065, 407], get(registered, 'village'), 8, 1);
-  put([700, 412, 815, 427], get(registered, 'soi'), 8, 1);
-  put([865, 412, 980, 427], get(registered, 'road'), 8, 1);
-  put([715, 435, 825, 450], get(registered, 'tambon'), 8, 1);
-  put([875, 435, 985, 450], get(registered, 'amphoe'), 8, 1);
-  put([1040, 435, 1158, 450], get(registered, 'province'), 8, 1);
-  put([710, 455, 800, 470], get(registered, 'zip'), 8, 1);
-  put([875, 455, 975, 470], get(registered, 'phone'), 8, 1);
+  putOnLine([760, 392, 820, 407], get(registered, 'houseNo'), 9, 1,400.61);
+  putOnLine([840, 392, 874, 407], get(registered, 'moo'), 9, 1,400.61);
+  putOnLine([908, 392, 1014, 407], get(registered, 'village'), 9, 0,400.61);
+  putOnLine([700, 412, 815, 427], get(registered, 'soi'), 9, 1,421.01);
+  putOnLine([865, 412, 980, 427], get(registered, 'road'), 9, 1,421.01);
+  putOnLine([715, 435, 825, 450], get(registered, 'tambon'), 9, 1,443.45);
+  putOnLine([875, 435, 985, 450], get(registered, 'amphoe'), 9, 1,443.45);
+  putOnLine([1040, 435, 1158, 450], get(registered, 'province'), 9, 1,443.45);
+  putOnLine([710, 455, 800, 470], get(registered, 'zip'), 9, 1,463.85);
+  putOnLine([875, 455, 975, 470], get(registered, 'phone'), 9, 1,463.85);
 
   const current = obj(p.curAddress);
-  put([754, 475, 817, 491], get(current, 'houseNo'), 8, 1);
-  put([840, 475, 874, 491], get(current, 'moo'), 8, 1);
-  put([908, 475, 1014, 491], get(current, 'village'), 8, 0);
-  put([1060, 475, 1157, 491], get(current, 'soi'), 8, 0);
-  put([685, 496, 800, 511], get(current, 'road'), 8, 1);
-  put([850, 496, 970, 511], get(current, 'tambon'), 8, 1);
-  put([1050, 496, 1158, 511], get(current, 'amphoe'), 8, 1);
-  put([700, 516, 820, 531], get(current, 'province'), 8, 1);
-  put([895, 516, 970, 531], get(current, 'zip'), 8, 1);
-  put([1050, 516, 1158, 531], get(current, 'phone'), 8, 1);
+  putOnLine([754, 475, 817, 491], get(current, 'houseNo'), 9, 1,484.27);
+  putOnLine([840, 475, 874, 491], get(current, 'moo'), 9, 1,484.27);
+  putOnLine([908, 475, 1014, 491], get(current, 'village'), 9, 0,484.27);
+  putOnLine([1060, 475, 1157, 491], get(current, 'soi'), 9, 0,484.27);
+  putOnLine([685, 496, 800, 511], get(current, 'road'), 9, 1,504.55);
+  putOnLine([850, 496, 970, 511], get(current, 'tambon'), 9, 1,504.55);
+  putOnLine([1050, 496, 1158, 511], get(current, 'amphoe'), 9, 1,504.55);
+  putOnLine([700, 516, 820, 531], get(current, 'province'), 9, 1,524.95);
+  putOnLine([895, 516, 970, 531], get(current, 'zip'), 9, 1,524.95);
+  putOnLine([1050, 516, 1158, 531], get(current, 'phone'), 9, 1,524.95);
   markValue(get(p, 'livingType'), [
     ['dorm', 698.2, 531.8],
     ['rent', 740.7, 531.8],
@@ -273,7 +353,7 @@ async function fillPage1(pdfDoc, page, height, fontRegular, fontBold, data) {
 }
 
 function fillPage2(page, height, fontRegular, fontBold, data) {
-  const { put, mark, markValue } = createPainter(page, height, fontRegular, fontBold);
+  const { put, mark, markValue } = createPainter(page, height, fontRegular, fontBold, LINE_BASELINES.page2);
 
   const marital = obj(data.marital);
   const spouse = obj(marital.spouse);
@@ -448,8 +528,21 @@ async function generateF06Pdf(record) {
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
 
-  const fontRegular = await pdfDoc.embedFont(fs.readFileSync(assetPath('fonts', 'Sarabun-Regular.ttf')));
-  const fontBold = await pdfDoc.embedFont(fs.readFileSync(assetPath('fonts', 'Sarabun-Bold.ttf')));
+  // ใช้ Sarabun เป็นฟอนต์หลัก (license OFL, tracked, มีบน Netlify แน่นอน)
+  // baseline ของช่องที่อยู่ถูกตรึงด้วย putOnLine จาก origin จุดจริง จึงอยู่บนเส้นทุกฟอนต์
+  const regularPath = firstExisting([
+    path.join(process.cwd(), 'fonts', 'Sarabun-Regular.ttf'),
+    path.join(__dirname, '..', 'fonts', 'Sarabun-Regular.ttf'),
+  ]);
+  const boldPath = firstExisting([
+    path.join(process.cwd(), 'fonts', 'Sarabun-Bold.ttf'),
+    path.join(__dirname, '..', 'fonts', 'Sarabun-Bold.ttf'),
+  ]);
+  if (!regularPath || !boldPath) {
+    throw new Error('ไม่พบฟอนต์ Sarabun');
+  }
+  const fontRegular = await pdfDoc.embedFont(fs.readFileSync(regularPath));
+  const fontBold = await pdfDoc.embedFont(fs.readFileSync(boldPath));
 
   const tpl1Bytes = fs.readFileSync(assetPath('templates', 'F06-005-page1.pdf'));
   const tpl2Bytes = fs.readFileSync(assetPath('templates', 'F06-005-page2.pdf'));
