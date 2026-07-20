@@ -354,20 +354,21 @@ async function fillPage1(pdfDoc, page, height, fontRegular, fontBold, data) {
   put([830, 637, 891, 652], get(siblings, 'male'), 8, 1);
   put([928, 637, 998, 652], get(siblings, 'female'), 8, 1);
   put([1062, 637, 1114, 652], get(siblings, 'order'), 8, 1);
+  // กริดจริงของตารางพี่น้อง (เส้นคอลัมน์): 628.8 / 671.5 / 827.3 / 877.0 / 954.8 / 1077.3 / 1166.8
   const siblingRows = arr(siblings.list);
-  const siblingTops = [672, 692.2, 712.5, 732.8, 753.2, 773.6];
-  const siblingBottoms = [692.1, 712.5, 732.8, 753.2, 773.6, 793.9];
+  const siblingTops = [671.7, 692.0, 712.3, 732.7, 753.0, 773.5];
+  const siblingBottoms = [692.0, 712.3, 732.7, 753.0, 773.5, 793.7];
   siblingTops.forEach((y, index) => {
     if (index >= siblingRows.length) return;
     const item = obj(siblingRows[index]);
     const rowBottom = siblingBottoms[index];
     const fields = [
-      [[636, y, 677, rowBottom], String(index + 1)],
-      [[680, y, 835, rowBottom], get(item, 'name')],
-      [[837, y, 884, rowBottom], get(item, 'age')],
-      [[886, y, 963, rowBottom], get(item, 'occupation')],
-      [[965, y, 1084, rowBottom], get(item, 'workplace')],
-      [[1086, y, 1159, rowBottom], get(item, 'position')],
+      [[631, y, 669, rowBottom], String(index + 1)],
+      [[674, y, 825, rowBottom], get(item, 'name')],
+      [[829, y, 875, rowBottom], get(item, 'age')],
+      [[879, y, 953, rowBottom], get(item, 'occupation')],
+      [[957, y, 1075, rowBottom], get(item, 'workplace')],
+      [[1079, y, 1165, rowBottom], get(item, 'position')],
     ];
     for (const [box, content] of fields) {
       put(box, content, 7, 1, false, false);
@@ -496,36 +497,40 @@ function fillPage2(page, height, fontRegular, fontBold, data) {
   markValue(get(vehicle, 'motorcycleLicenseType'), [['yearly', 845.6, 341.9], ['lifetime', 885.6, 341.9]]);
   put([1010, 342, 1148, 359], get(vehicle, 'motorcycleLicenseNo'), 8);
 
+  // กริดจริงของตารางบุคคลอ้างอิง: 629.2 / 663.5 / 803.5 / 868.8 / 944.7 / 1089.8 / 1160.7
   arr(data.references).slice(0, 2).forEach((raw, index) => {
     const item = obj(raw);
-    const y = 408.6 + index * 23.2;
+    const y = 408.5 + index * 23.2;
     const fields = [
-      [[635, y, 669, y + 23.2], String(index + 1)],
-      [[672, y, 809, y + 23.2], get(item, 'name')],
-      [[812, y, 875, y + 23.2], get(item, 'relation')],
-      [[878, y, 950, y + 23.2], get(item, 'occupation')],
-      [[953, y, 1095, y + 23.2], get(item, 'address')],
-      [[1098, y, 1160, y + 23.2], get(item, 'phone')],
+      [[631, y, 661, y + 23.2], String(index + 1)],
+      [[665, y, 801, y + 23.2], get(item, 'name')],
+      [[805, y, 867, y + 23.2], get(item, 'relation')],
+      [[871, y, 943, y + 23.2], get(item, 'occupation')],
+      [[947, y, 1088, y + 23.2], get(item, 'address')],
+      [[1092, y, 1159, y + 23.2], get(item, 'phone')],
     ];
     for (const [box, content] of fields) {
       put(box, content, 6.5, 1, false, false);
     }
   });
 
+  // กริดจริงของตารางประวัติการทำงาน (เส้นคอลัมน์):
+  // 14.2 / 76.3 / 140.0 / 296.0 / 373.8 / 459.0 / 544.0 / 785.0 / 864.5 / 940.8 / 1160.7
   arr(data.workHistory).slice(0, 7).forEach((raw, index) => {
     const item = obj(raw);
-    const y = 535.1 + index * 23.2;
+    const y = 535.0 + index * 23.2;
+    const h = 23.2;
     const fields = [
-      [[20, y, 82, y + 22], get(item, 'fromDate')],
-      [[85, y, 145, y + 22], get(item, 'toDate')],
-      [[148, y, 301, y + 22], get(item, 'company')],
-      [[304, y, 379, y + 22], get(item, 'businessType')],
-      [[382, y, 464, y + 22], get(item, 'startPosition')],
-      [[468, y, 549, y + 22], get(item, 'endPosition')],
-      [[553, y, 790, y + 22], get(item, 'responsibilities')],
-      [[793, y, 870, y + 22], get(item, 'salaryStart')],
-      [[873, y, 946, y + 22], get(item, 'salaryEnd')],
-      [[950, y, 1160, y + 22], get(item, 'leaveReason')],
+      [[16, y, 74, y + h], get(item, 'fromDate')],
+      [[78, y, 138, y + h], get(item, 'toDate')],
+      [[142, y, 294, y + h], get(item, 'company')],
+      [[298, y, 372, y + h], get(item, 'businessType')],
+      [[376, y, 457, y + h], get(item, 'startPosition')],
+      [[461, y, 542, y + h], get(item, 'endPosition')],
+      [[546, y, 783, y + h], get(item, 'responsibilities')],
+      [[787, y, 862, y + h], get(item, 'salaryStart')],
+      [[866, y, 939, y + h], get(item, 'salaryEnd')],
+      [[943, y, 1159, y + h], get(item, 'leaveReason')],
     ];
     for (const [box, content] of fields) {
       put(box, content, 6, 1, false, false);
