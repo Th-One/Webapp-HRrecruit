@@ -259,9 +259,11 @@ async function fillPage1(pdfDoc, page, height, fontRegular, fontBold, data) {
     const known = arr(p.knownEmployees);
     if (index >= known.length) return;
     const item = obj(known[index]);
-    put([100, y, 290, y + 16], get(item, 'name'), 8);
-    put([375, y, 465, y + 16], get(item, 'dept') || get(item, 'department'), 8);
-    put([505, y, 566, y + 16], get(item, 'relation'), 8);
+    // กล่องต้องตรงกับช่วงเส้นจุดจริงใน template ไม่งั้นข้อความยาวจะล้ำไปทับ label ถัดไป
+    // (เส้นจุด: ชื่อ 80.9-297.0 | แผนก/ฝ่าย 343.9-438.6 | ความสัมพันธ์ 492.9-565.1)
+    put([82, y, 295, y + 16], get(item, 'name'), 8);
+    put([345, y, 437, y + 16], get(item, 'dept') || get(item, 'department'), 8);
+    put([494, y, 564, y + 16], get(item, 'relation'), 8);
   });
 
   markValue(get(p, 'smoking'), [['no', 94.1, 269.8], ['yes', 134.7, 269.8]]);
