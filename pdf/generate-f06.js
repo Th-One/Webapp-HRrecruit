@@ -418,16 +418,25 @@ function fillPage2(page, height, fontRegular, fontBold, data) {
   put([205, 203, 250, 220], get(military, 'year'), 9, 1);
   put([365, 203, 565, 220], get(military, 'exemptReason'), 8);
 
+  // กริดจริงของตารางความสามารถทางภาษา วัดจาก template
+  // เส้นแถว: 60.5 / 83.8 / 107.0 / 130.2 / 153.3 — เส้นคอลัมน์: 799.2 / 891.3 / 983.5 / 1075.7 / 1160.7
   const languages = obj(data.languages);
-  const langRows = [['english', 58], ['chinese', 81], ['japanese', 104], ['other', 127]];
-  const langColumns = [['speak', 820, 906], ['write', 906, 992], ['read', 992, 1078], ['listen', 1078, 1161]];
+  const LANG_ROW_HEIGHT = 23.2;
+  const langRows = [['english', 60.5], ['chinese', 83.8], ['japanese', 107.0], ['other', 130.2]];
+  const langColumns = [
+    ['speak', 799.2, 891.3],
+    ['write', 891.3, 983.5],
+    ['read', 983.5, 1075.7],
+    ['listen', 1075.7, 1160.7],
+  ];
   for (const [key, y] of langRows) {
     const item = obj(languages[key]);
     if (key === 'other') {
-      put([670, y, 810, y + 22], get(item, 'name'), 8, 1);
+      // ช่องระบุภาษาอื่น อยู่บนเส้นจุด 666.3-774.5 ไม่ใช่กึ่งกลางเซลล์
+      put([668, y, 773, y + LANG_ROW_HEIGHT], get(item, 'name'), 8, 1);
     }
     for (const [field, x0, x1] of langColumns) {
-      put([x0, y, x1, y + 22], get(item, field), 8, 1, false, false);
+      put([x0, y, x1, y + LANG_ROW_HEIGHT], get(item, field), 8, 1, false, false);
     }
   }
 
@@ -457,16 +466,18 @@ function fillPage2(page, height, fontRegular, fontBold, data) {
     }
     if (y > 431.8) return;
     used.add(y);
+    // กริดจริงของตารางประวัติการศึกษา (เส้นคอลัมน์): 14.2 / 102.2 / 277.8 / 333.2 / 387.7 / 446.3 / 524.3 / 580.8
     if (get(item, 'level') === 'other') {
-      put([20, y, 105, y + 23.2], get(item, 'otherLevel'), 7, 1);
+      // วางหลัง label "อื่นๆ" ที่กิน 19.8-39.7 และจัดกึ่งกลางเซลล์ (ช่องนี้ไม่มีเส้นจุด)
+      put([42, y, 100, y + 23.2], get(item, 'otherLevel'), 7, 1, false, false);
     }
     const fields = [
-      [[108, y, 283, y + 23.2], get(item, 'school')],
-      [[287, y, 338, y + 23.2], get(item, 'from')],
-      [[342, y, 393, y + 23.2], get(item, 'to')],
-      [[397, y, 452, y + 23.2], get(item, 'degree')],
-      [[455, y, 530, y + 23.2], get(item, 'major')],
-      [[533, y, 586, y + 23.2], get(item, 'gpa')],
+      [[104, y, 276, y + 23.2], get(item, 'school')],
+      [[279, y, 331, y + 23.2], get(item, 'from')],
+      [[335, y, 386, y + 23.2], get(item, 'to')],
+      [[389, y, 444, y + 23.2], get(item, 'degree')],
+      [[448, y, 522, y + 23.2], get(item, 'major')],
+      [[526, y, 579, y + 23.2], get(item, 'gpa')],
     ];
     for (const [box, content] of fields) {
       put(box, content, 7, 1, false, false);
