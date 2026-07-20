@@ -68,6 +68,34 @@ function searchText(record) {
 
 let allRecords = [];
 
+// ช่วงเวลาที่เลือกจากการ์ดสถิติ — null คือยังไม่ได้เลือก (แสดงทั้งหมด)
+let activeScope = null;
+
+const SCOPE_TITLE = {
+  all: "ใบสมัครทั้งหมด",
+  month: "ใบสมัครที่ส่งมาในเดือนนี้",
+  today: "ใบสมัครที่ส่งมาวันนี้",
+};
+
+const DEFAULT_TITLE = "ตำแหน่งที่สมัคร";
+
+function isSameDay(date, now) {
+  return date.toDateString() === now.toDateString();
+}
+
+function isSameMonth(date, now) {
+  return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+}
+
+function recordsInScope(list, scope) {
+  if (scope !== "month" && scope !== "today") return list;
+  const now = new Date();
+  return list.filter((r) => {
+    const d = new Date(r.createdAt);
+    return scope === "today" ? isSameDay(d, now) : isSameMonth(d, now);
+  });
+}
+
 function renderList(filter = "") {
   const tbody = document.getElementById("list-body");
   const q = filter.trim().toLowerCase();
@@ -119,14 +147,8 @@ function escapeHtml(str) {
 
 function updateStats(list) {
   const now = new Date();
-  const today = list.filter((r) => {
-    const d = new Date(r.createdAt);
-    return d.toDateString() === now.toDateString();
-  }).length;
-  const month = list.filter((r) => {
-    const d = new Date(r.createdAt);
-    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-  }).length;
+  const today = list.filter((r) => isSameDay(new Date(r.createdAt), now)).length;
+  const month = list.filter((r) => isSameMonth(new Date(r.createdAt), now)).length;
   document.getElementById("stat-total").textContent = list.length;
   document.getElementById("stat-month").textContent = month;
   document.getElementById("stat-today").textContent = today;
@@ -134,11 +156,13 @@ function updateStats(list) {
 
 function updatePositionDashboard(list) {
   const section = document.getElementById("position-dashboard");
+  const title = document.getElementById("position-dashboard-title");
   const summary = document.getElementById("position-dashboard-summary");
   const container = document.getElementById("position-bars");
+  const scoped = recordsInScope(list, activeScope);
   const counts = new Map();
 
-  for (const record of list) {
+  for (const record of scoped) {
     const position = record.data?.page1?.positionApplied?.trim() || "(ไม่ระบุตำแหน่ง)";
     counts.set(position, (counts.get(position) || 0) + 1);
   }
@@ -146,13 +170,15 @@ function updatePositionDashboard(list) {
   const rows = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "th"));
   const max = rows[0]?.[1] || 0;
 
+  title.textContent = SCOPE_TITLE[activeScope] || DEFAULT_TITLE;
+  // ซ่อนเฉพาะตอนไม่มีใบสมัครเลย ถ้าเลือกช่วงแล้วไม่มีข้อมูลให้บอกผู้ใช้แทน
   section.hidden = !list.length;
   summary.textContent = rows.length
-    ? `${rows.length} ตำแหน่ง · รวม ${list.length} ใบสมัคร`
+    ? `${rows.length} ตำแหน่ง · รวม ${scoped.length} ใบสมัคร`
     : "";
 
   if (!rows.length) {
-    container.innerHTML = `<div class="position-empty">ยังไม่มีข้อมูลตำแหน่ง</div>`;
+    container.innerHTML = `<div class="position-empty">ไม่มีใบสมัครในช่วงที่เลือก</div>`;
     return;
   }
 
@@ -179,9 +205,21 @@ async function load() {
   renderList(document.getElementById("search").value);
 }
 
+function setScope(scope) {
+  // กดการ์ดเดิมซ้ำ = ยกเลิกการเลือก กลับไปหัวข้อเริ่มต้น
+  activeScope = activeScope === scope ? null : scope;
+  document.querySelectorAll(".stat-card[data-scope]").forEach((card) => {
+    card.setAttribute("aria-pressed", String(card.dataset.scope === activeScope));
+  });
+  updatePositionDashboard(allRecords);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("search").addEventListener("input", (e) => {
     renderList(e.target.value);
+  });
+  document.querySelectorAll(".stat-card[data-scope]").forEach((card) => {
+    card.addEventListener("click", () => setScope(card.dataset.scope));
   });
   load().catch(() => toast("โหลดข้อมูลไม่สำเร็จ", true));
 });
