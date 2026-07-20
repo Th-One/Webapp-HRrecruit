@@ -161,7 +161,9 @@
           </label>
         </div>
 
-        <div class="photo-upload" id="photoDrop">
+        <!-- ปิดอัปโหลดรูปชั่วคราว (รูป base64 กินโควตา payload 6 MB ของ Netlify Function)
+             เปิดคืนได้ที่ PHOTO_UPLOAD_ENABLED ใน public/js/form.js -->
+        <div class="photo-upload" id="photoDrop" hidden>
           <input type="file" name="photoFile" id="photoFile" accept="image/*" hidden />
           <input type="hidden" name="photoData" id="photoData" />
           <div class="photo-preview" id="photoWrap">
@@ -863,6 +865,6 @@
     </div>
   </template>
 
-  <script src="/js/form.js?v=2"></script>
+  <script src="/js/form.js?v=5"></script>
 </body>
 </html>

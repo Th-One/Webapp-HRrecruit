@@ -1,3 +1,9 @@
+// สวิตช์เดียวสำหรับเปิด/ปิดอัปโหลดรูปถ่าย
+// ปิดไว้เพราะรูป base64 (สูงสุด ~2 MB/ใบ) กินโควตา payload 6 MB ของ Netlify Function
+// จนหน้า HR โหลดรายชื่อไม่ได้เมื่อมีใบสมัครไม่กี่ใบ
+// เปิดคืน: ตั้งเป็น true แล้วเปิด PHOTO_UPLOAD_ENABLED ใน server.js ด้วย
+const PHOTO_UPLOAD_ENABLED = false;
+
 const LANG_LEVELS = ["", "ดีมาก", "ดี", "พอใช้", "น้อย"];
 const EDU_KEYS = ["primary", "m1", "m2", "diploma", "bachelor", "master", "other"];
 const PROGRESS_SECTIONS = [
@@ -229,7 +235,7 @@ function collectForm() {
       idCardIssuedAt: fd.get("idCardIssuedAt") || "",
       idCardIssueDate: fd.get("idCardIssueDate") || "",
       idCardExpiry: fd.get("idCardExpiry") || "",
-      photoData: fd.get("photoData") || "",
+      photoData: PHOTO_UPLOAD_ENABLED ? fd.get("photoData") || "" : "",
       regAddress: addressFrom("reg", fd),
       curAddress: addressFrom("cur", fd),
       livingType: radioVal("livingType"),
@@ -408,7 +414,7 @@ function populateForm(data) {
   set("nameTh", p.nameTh); set("nameEn", p.nameEn); set("ethnicity", p.ethnicity); set("nationality", p.nationality); set("religion", p.religion);
   set("birthDate", p.birthDate); set("age", p.age); set("weight", p.weight); set("height", p.height);
   set("idCardNo", p.idCardNo); set("idCardIssuedAt", p.idCardIssuedAt); set("idCardIssueDate", p.idCardIssueDate); set("idCardExpiry", p.idCardExpiry);
-  if (p.photoData) { document.getElementById("photoData").value = p.photoData; const pv = document.getElementById("photoPreview"); pv.src = p.photoData; pv.hidden = false; document.getElementById("photoPlaceholder").hidden = true; document.getElementById("photoRemove").hidden = false; }
+  if (PHOTO_UPLOAD_ENABLED && p.photoData) { document.getElementById("photoData").value = p.photoData; const pv = document.getElementById("photoPreview"); pv.src = p.photoData; pv.hidden = false; document.getElementById("photoPlaceholder").hidden = true; document.getElementById("photoRemove").hidden = false; }
   const a = (pre, obj) => { if (!obj) return; set(`${pre}HouseNo`, obj.houseNo); set(`${pre}Moo`, obj.moo); set(`${pre}Village`, obj.village); set(`${pre}Soi`, obj.soi); set(`${pre}Road`, obj.road); set(`${pre}Tambon`, obj.tambon); set(`${pre}Amphoe`, obj.amphoe); set(`${pre}Province`, obj.province); set(`${pre}Zip`, obj.zip); set(`${pre}Phone`, obj.phone); };
   a("reg", p.regAddress); a("cur", p.curAddress);
   setRadio("livingType", p.livingType); set("livingOther", p.livingOther);
@@ -506,10 +512,13 @@ document.addEventListener("DOMContentLoaded", () => {
     el.addEventListener("change", toggleMarriedBlock);
   });
 
+  // ผูก event ของรูปถ่ายเฉพาะตอนเปิดใช้งาน — ปิดอยู่จะซ่อนทั้งบล็อกไว้
+  const photoBlock = document.getElementById("photoDrop");
+  if (photoBlock) photoBlock.hidden = !PHOTO_UPLOAD_ENABLED;
+  if (PHOTO_UPLOAD_ENABLED) {
   document.getElementById("photoFile").addEventListener("change", (e) => {
     handlePhoto(e.target.files?.[0]);
   });
-  const drop = document.getElementById("photoDrop");
   const wrap = document.getElementById("photoWrap");
   if (wrap) {
     wrap.addEventListener("click", () => document.getElementById("photoFile").click());
@@ -518,6 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
     wrap.addEventListener("drop", (e) => { const f = e.dataTransfer?.files?.[0]; if (f) handlePhoto(f); });
   }
   document.getElementById("photoRemove").addEventListener("click", (e) => { e.stopPropagation(); document.getElementById("photoFile").value = ""; handlePhoto(null); });
+  }
 
   document.getElementById("add-work").addEventListener("click", () => addWork());
   document.getElementById("add-club").addEventListener("click", () => addClub());

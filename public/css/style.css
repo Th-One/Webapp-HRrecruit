@@ -848,6 +848,11 @@ button:active,
   flex-wrap: wrap;
 }
 
+/* display: flex ข้างบนทับ attribute hidden ต้องประกาศให้ชัดเพื่อให้ปิดรูปได้จริง */
+.photo-upload[hidden] {
+  display: none;
+}
+
 .photo-preview {
   width: 130px;
   height: 165px;
