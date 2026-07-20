@@ -51,15 +51,28 @@ function get(item, key) {
 function isThaiCombining(codePoint) {
   return (
     codePoint === 0x0E31 ||
-    codePoint === 0x0E33 ||
     (codePoint >= 0x0E34 && codePoint <= 0x0E3A) ||
     (codePoint >= 0x0E47 && codePoint <= 0x0E4E)
   );
 }
 
+// สระบนที่วรรณยุกต์ต้องวางซ้อนอีกชั้น
+const THAI_UPPER_VOWELS = new Set([0x0E31, 0x0E34, 0x0E35, 0x0E36, 0x0E37, 0x0E47, 0x0E4D]);
+// วรรณยุกต์ + ทัณฑฆาต
+const THAI_TONE_MARKS = new Set([0x0E48, 0x0E49, 0x0E4A, 0x0E4B, 0x0E4C]);
+// สัดส่วนความสูงที่ต้องยกวรรณยุกต์เมื่อซ้อนบนสระบน (ปกติฟอนต์จัดให้ผ่าน GPOS)
+const TONE_STACK_RAISE = 0.24;
+
+// สระอำ = นิคหิต + สระอา แต่ถูกเข้ารหัสเป็นอักขระเดียว (U+0E33)
+// ต้องแตกออกก่อน เพราะเวลาวาดทีละอักขระ ส่วน "า" ซึ่งมีความกว้างจริง
+// จะถูกวางผิดตำแหน่งและตัวถัดไปจะทับ
+function normalizeThai(content) {
+  return content.replace(/ำ/g, 'ํา');
+}
+
 function measureThaiText(content, font, size) {
   let width = 0;
-  for (const char of content) {
+  for (const char of normalizeThai(content)) {
     const codePoint = char.codePointAt(0);
     if (!isThaiCombining(codePoint)) {
       width += font.widthOfTextAtSize(char, size);
@@ -68,14 +81,22 @@ function measureThaiText(content, font, size) {
   return width;
 }
 
+// วาดทีละอักขระและคุม cursor เอง เพราะ pdf-lib กำหนด advance ของ glyph
+// วรรณยุกต์/สระเป็นเต็ม em แทนที่จะเป็น 0 ทำให้วาดทั้ง string แล้วเพี้ยน
 function drawThaiText(page, content, x, y, size, font, color) {
   let cursor = x;
-  for (const char of content) {
+  let previous = 0;
+  for (const char of normalizeThai(content)) {
     const codePoint = char.codePointAt(0);
-    page.drawText(char, { x: cursor, y, size, font, color });
+    const raise =
+      THAI_TONE_MARKS.has(codePoint) && THAI_UPPER_VOWELS.has(previous)
+        ? size * TONE_STACK_RAISE
+        : 0;
+    page.drawText(char, { x: cursor, y: y + raise, size, font, color });
     if (!isThaiCombining(codePoint)) {
       cursor += font.widthOfTextAtSize(char, size);
     }
+    previous = codePoint;
   }
 }
 
